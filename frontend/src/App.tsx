@@ -59,21 +59,21 @@ function App() {
       <div className="fixed inset-0 opacity-10 pointer-events-none z-0">
         <div className="absolute top-10 right-10 w-64 h-64 transform rotate-12">
           <img 
-            src="/banana-superhero-logo.png" 
+            src="/banana-superhero-logo-transparent.png" 
             alt="" 
             className="w-full h-full object-contain"
           />
         </div>
         <div className="absolute bottom-20 left-10 w-48 h-48 transform -rotate-12">
           <img 
-            src="/banana-superhero-logo.png" 
+            src="/banana-superhero-logo-transparent.png" 
             alt="" 
             className="w-full h-full object-contain"
           />
         </div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 opacity-5">
           <img 
-            src="/banana-superhero-logo.png" 
+            src="/banana-superhero-logo-transparent.png" 
             alt="" 
             className="w-full h-full object-contain"
           />
@@ -86,7 +86,7 @@ function App() {
         <header className="text-center py-12">
           <div className="flex items-center justify-center mb-4">
             <img 
-              src="/banana-superhero-logo.png" 
+              src="/banana-superhero-logo-transparent.png" 
               alt="香蕉小超人" 
               className="w-20 h-20 object-contain mr-4"
             />
@@ -190,7 +190,7 @@ function App() {
 
         {/* 版权信息 */}
         <footer className="text-center py-6">
-          <p className="text-amber-600">Created by MiniMax Agent</p>
+          <p className="text-amber-600">Created by 香蕉AI工作室</p>
         </footer>
       </div>
     </div>

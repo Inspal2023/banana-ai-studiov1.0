@@ -17,10 +17,10 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-18">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
+            <div className="w-16 h-16 flex items-center justify-center">
               <img 
-                src="/banana-logo.jpg" 
-                alt="Banana AI Studio Logo" 
+                src="/banana-logo.png" 
+                alt="香蕉AI工作室 Logo" 
                 className="w-full h-full object-contain"
               />
             </div>

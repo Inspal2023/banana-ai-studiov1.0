@@ -29,39 +29,77 @@ function App() {
   const tabs = [
     {
       id: 'line-art' as Tab,
-      label: '线稿图',
+      label: '线稿图生成',
       icon: Pen,
-      color: 'text-secondary-500',
+      color: 'text-amber-600',
+      bgColor: 'bg-amber-100',
+      borderColor: 'border-amber-300'
     },
     {
       id: 'multi-view' as Tab,
-      label: '三视图',
+      label: '三视图生成',
       icon: Box,
-      color: 'text-purple-500',
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-100',
+      borderColor: 'border-purple-300'
     },
     {
       id: 'background' as Tab,
-      label: '换场景',
+      label: '背景替换',
       icon: ImageIcon,
-      color: 'text-green-500',
+      color: 'text-green-600',
+      bgColor: 'bg-green-100',
+      borderColor: 'border-green-300'
     },
   ]
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* 头部导航栏 - 只包含LOGO和标题 */}
-      <header className="bg-white border-b-2 border-neutral-300">
-        <div className="max-w-[1400px] mx-auto px-xxxl h-32 flex items-center">
-          <img src="/images/logo.png" alt="香蕉AI工作室" className="h-32 w-auto" />
-          <h1 className="logo-text ml-lg">香蕉AI工作室</h1>
+    <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-orange-50 to-yellow-200 relative">
+      {/* 香蕉小超人Logo作为背景装饰 */}
+      <div className="fixed inset-0 opacity-10 pointer-events-none z-0">
+        <div className="absolute top-10 right-10 w-64 h-64 transform rotate-12">
+          <img 
+            src="/banana-superhero-logo.png" 
+            alt="" 
+            className="w-full h-full object-contain"
+          />
         </div>
-      </header>
+        <div className="absolute bottom-20 left-10 w-48 h-48 transform -rotate-12">
+          <img 
+            src="/banana-superhero-logo.png" 
+            alt="" 
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 opacity-5">
+          <img 
+            src="/banana-superhero-logo.png" 
+            alt="" 
+            className="w-full h-full object-contain"
+          />
+        </div>
+      </div>
 
-      {/* 主体区域：左侧Tab + 右侧内容 */}
-      <div className="flex flex-1">
-        {/* 左侧Tab导航 */}
-        <aside className="w-[200px] bg-white border-r-2 border-neutral-300">
-          <nav className="p-lg space-y-sm">
+      {/* 主内容区域 */}
+      <div className="relative z-10">
+        {/* 标题区域 */}
+        <header className="text-center py-12">
+          <div className="flex items-center justify-center mb-4">
+            <img 
+              src="/banana-superhero-logo.png" 
+              alt="香蕉小超人" 
+              className="w-20 h-20 object-contain mr-4"
+            />
+            <h1 className="text-4xl font-bold text-amber-800">香蕉AI工作室</h1>
+          </div>
+          <p className="text-lg text-amber-700 max-w-2xl mx-auto px-4">
+            上传您的图片，体验AI驱动的创意图像处理技术
+          </p>
+        </header>
+
+        {/* 功能选择区域 */}
+        <section className="max-w-4xl mx-auto px-4 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {tabs.map((tab) => {
               const Icon = tab.icon
               const isActive = activeTab === tab.id
@@ -70,55 +108,90 @@ function App() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`tab-button-base w-full flex items-center gap-md px-lg py-md rounded-lg ${
+                  className={`p-6 rounded-xl border-2 transition-all duration-300 ${
                     isActive 
-                      ? 'tab-button-active' 
-                      : 'tab-button-inactive'
+                      ? `${tab.bgColor} ${tab.borderColor} shadow-lg scale-105` 
+                      : 'bg-white border-gray-200 hover:shadow-md hover:scale-102'
                   }`}
                 >
-                  <Icon className={`w-5 h-5 ${isActive ? 'text-white' : tab.color}`} />
-                  <span className={`tab-text ${isActive ? 'tab-text-active' : 'tab-text-inactive'}`}>{tab.label}</span>
+                  <Icon className={`w-8 h-8 mx-auto mb-3 ${isActive ? tab.color : 'text-gray-600'}`} />
+                  <span className={`block text-lg font-semibold ${
+                    isActive ? tab.color : 'text-gray-700'
+                  }`}>
+                    {tab.label}
+                  </span>
                 </button>
               )
             })}
-          </nav>
-        </aside>
+          </div>
+        </section>
 
-        {/* 右侧主内容区 */}
-        <main className="flex-1 max-w-[1200px] mx-auto px-xxxl py-xxxl">
-        {activeTab === 'line-art' && (
-          <LineArtGenerator 
-            imageState={sharedImage}
-            setImageState={setSharedImage}
-            isGenerating={isGenerating}
-            setIsGenerating={setIsGenerating}
-            resultUrl={lineArtResult}
-            setResultUrl={setLineArtResult}
-          />
-        )}
-        {activeTab === 'multi-view' && (
-          <MultiViewGenerator 
-            imageState={sharedImage}
-            setImageState={setSharedImage}
-            isGenerating={isGenerating}
-            setIsGenerating={setIsGenerating}
-            resultUrl={multiViewResult}
-            setResultUrl={setMultiViewResult}
-          />
-        )}
-        {activeTab === 'background' && (
-          <BackgroundReplacer 
-            subjectImage={sharedImage}
-            setSubjectImage={setSharedImage}
-            backgroundImage={backgroundImage}
-            setBackgroundImage={setBackgroundImage}
-            isGenerating={isGenerating}
-            setIsGenerating={setIsGenerating}
-            resultUrl={backgroundResult}
-            setResultUrl={setBackgroundResult}
-          />
-        )}
+        {/* 主内容区域 */}
+        <main className="max-w-6xl mx-auto px-4 pb-12">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8">
+            {activeTab === 'line-art' && (
+              <LineArtGenerator 
+                imageState={sharedImage}
+                setImageState={setSharedImage}
+                isGenerating={isGenerating}
+                setIsGenerating={setIsGenerating}
+                resultUrl={lineArtResult}
+                setResultUrl={setLineArtResult}
+              />
+            )}
+            {activeTab === 'multi-view' && (
+              <MultiViewGenerator 
+                imageState={sharedImage}
+                setImageState={setSharedImage}
+                isGenerating={isGenerating}
+                setIsGenerating={setIsGenerating}
+                resultUrl={multiViewResult}
+                setResultUrl={setMultiViewResult}
+              />
+            )}
+            {activeTab === 'background' && (
+              <BackgroundReplacer 
+                subjectImage={sharedImage}
+                setSubjectImage={setSharedImage}
+                backgroundImage={backgroundImage}
+                setBackgroundImage={setBackgroundImage}
+                isGenerating={isGenerating}
+                setIsGenerating={setIsGenerating}
+                resultUrl={backgroundResult}
+                setResultUrl={setBackgroundResult}
+              />
+            )}
+          </div>
         </main>
+
+        {/* 使用说明 */}
+        <section className="max-w-4xl mx-auto px-4 pb-12">
+          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6">
+            <h2 className="text-2xl font-bold text-amber-800 mb-4 text-center">如何使用</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">1</div>
+                <h3 className="font-semibold text-amber-800 mb-2">上传照片</h3>
+                <p className="text-sm text-amber-700">选择一张清晰的图片，支持JPG、PNG、WEBP格式</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">2</div>
+                <h3 className="font-semibold text-amber-800 mb-2">AI处理</h3>
+                <p className="text-sm text-amber-700">选择功能后，AI会分析您的图片并进行相应的处理</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">3</div>
+                <h3 className="font-semibold text-amber-800 mb-2">获得结果</h3>
+                <p className="text-sm text-amber-700">几秒钟后，您将获得处理后的创意图片结果</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 版权信息 */}
+        <footer className="text-center py-6">
+          <p className="text-amber-600">Created by MiniMax Agent</p>
+        </footer>
       </div>
     </div>
   )

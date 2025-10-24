@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 50%, #FDE68A 100%);
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 25%, #F59E0B 50%, #D97706 75%, #92400E 100%);
     min-height: 100vh;
     font-family: 'SimHei', 'Microsoft YaHei', 'PingFang SC', 'Heiti SC', sans-serif;
     color: #18181B;

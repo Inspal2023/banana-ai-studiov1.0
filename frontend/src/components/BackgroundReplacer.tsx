@@ -227,11 +227,11 @@ export default function BackgroundReplacer({
   }
 
   return (
-    <div className="flex gap-8 max-w-6xl mx-auto">
+    <div className="flex gap-16 max-w-6xl mx-auto">
       {/* 左侧操作区 */}
-      <div className="flex-1 space-y-3">
+      <div className="w-[300px] h-[300px] space-y-3">
         {/* 模式选择区域 */}
-        <div className="card-elevated p-3">
+        <div className="p-3 border border-gray-200 bg-white/80 rounded-lg">
           <label className="section-title-decorated text-xs mb-2 block">选择模式</label>
           <div className="text-xs text-gray-600 mb-2">场景融合：让图片与新场景完美融合</div>
           <div className="grid grid-cols-3 gap-1">
@@ -269,7 +269,7 @@ export default function BackgroundReplacer({
         </div>
 
         {/* 主体图片上传 */}
-        <div className="card-elevated p-3">
+        <div className="p-3 border border-gray-200 bg-white/80 rounded-lg">
           <label className="section-title-decorated text-xs mb-2">主体图片</label>
           <ImageUpload 
             onImageSelect={handleImageSelect}
@@ -283,7 +283,7 @@ export default function BackgroundReplacer({
           <>
             {/* 背景图片（图片模式/混合模式） */}
             {(mode === 'image' || mode === 'hybrid') && (
-              <div className="card-elevated p-3">
+              <div className="p-3 border border-gray-200 bg-white/80 rounded-lg">
                 <label className="section-title-decorated text-xs mb-2">背景图片</label>
                 <ImageUpload 
                   onImageSelect={handleBackgroundSelect}
@@ -296,7 +296,7 @@ export default function BackgroundReplacer({
 
             {/* 文本描述（文字模式/混合模式） */}
             {(mode === 'text' || mode === 'hybrid') && (
-              <div className="card-elevated p-3">
+              <div className="p-3 border border-gray-200 bg-white/80 rounded-lg">
                 <label className="section-title-decorated text-xs mb-2">
                   {mode === 'hybrid' ? '修改描述' : '背景描述'}
                 </label>
@@ -349,20 +349,20 @@ export default function BackgroundReplacer({
       </div>
 
       {/* 右侧结果区 */}
-      <div className="flex-1">
-        <div className="card-result p-3 h-full">
+      <div className="w-[300px] h-[300px]">
+        <div className="p-3 border border-gray-200 bg-white/80 rounded-lg h-full">
           <h2 className="section-title-decorated text-sm mb-3">生成结果</h2>
           {isGenerating ? (
-            <div className="h-80 bg-neutral-50 rounded-md flex flex-col items-center justify-center">
-              <div className="image-skeleton w-full h-60 rounded-md"></div>
+            <div className="h-full bg-neutral-50 rounded-md flex flex-col items-center justify-center">
+              <div className="image-skeleton w-full h-[200px] rounded-md"></div>
               <p className="mt-2 text-neutral-600 text-xs">AI正在融合您的图片场景，请稍候...</p>
             </div>
           ) : resultUrl ? (
-            <div className="result-fade-in h-80">
+            <div className="result-fade-in h-full">
               <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
             </div>
           ) : (
-            <div className="h-80 bg-neutral-50 rounded-md flex items-center justify-center">
+            <div className="h-full bg-neutral-50 rounded-md flex items-center justify-center">
               <p className="description-text-gradient text-neutral-600 text-xs text-center px-4">上传图片后点击"开始生成"，融合后的图片将显示在这里</p>
             </div>
           )}

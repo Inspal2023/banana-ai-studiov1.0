@@ -18,11 +18,23 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
         <div className="flex items-center justify-between h-18">
           <div className="flex items-center space-x-3">
             <div className="w-16 h-16 flex items-center justify-center">
-              <img 
-                src="/banana-logo.png" 
-                alt="香蕉AI工作室 Logo" 
-                className="w-full h-full object-contain"
-              />
+              <svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#shadow)">
+                  <path d="M12 24 C 8 20, 8 16, 12 14 C 16 12, 22 14, 26 18 C 30 22, 32 28, 30 32 C 28 36, 22 38, 18 36 C 14 34, 12 28, 12 24 Z" 
+                        fill="#FCD34D" stroke="#F59E0B" strokeWidth="2"/>
+                  <path d="M16 18 C 18 16, 22 16, 24 18 C 22 20, 18 20, 16 18 Z" 
+                        fill="#FEF3C7" opacity="0.7"/>
+                  <path d="M12 14 C 14 12, 16 12, 18 14" 
+                        fill="none" stroke="#92400E" strokeWidth="2" strokeLinecap="round"/>
+                  <path d="M28 32 C 30 30, 32 30, 34 32" 
+                        fill="none" stroke="#92400E" strokeWidth="2" strokeLinecap="round"/>
+                </g>
+                <defs>
+                  <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feDropShadow dx="1" dy="1" stdDeviation="2" floodColor="#000000" floodOpacity="0.3"/>
+                  </filter>
+                </defs>
+              </svg>
             </div>
             <h1 className="text-2xl font-bold text-neutral-50">香蕉AI工作室</h1>
           </div>

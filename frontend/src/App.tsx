@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Pen, Box, Image as ImageIcon } from 'lucide-react'
 import LineArtGenerator from './components/LineArtGenerator'
 import MultiViewGenerator from './components/MultiViewGenerator'
@@ -53,6 +53,22 @@ function App() {
     },
   ]
 
+  // 为每个tab创建独立的点击处理器
+  const handleLineArtClick = () => {
+    console.log('按钮被点击:', 'line-art', '标签:', '线稿图')
+    setActiveTab('line-art')
+  }
+
+  const handleMultiViewClick = () => {
+    console.log('按钮被点击:', 'multi-view', '标签:', '三视图')
+    setActiveTab('multi-view')
+  }
+
+  const handleBackgroundClick = () => {
+    console.log('按钮被点击:', 'background', '标签:', '场景融合')
+    setActiveTab('background')
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-orange-50 to-yellow-200 relative">
       {/* 香蕉小超人Logo作为背景装饰 */}
@@ -100,32 +116,56 @@ function App() {
         {/* 功能选择区域 */}
         <section className="max-w-4xl mx-auto px-4 mb-6">
           <div className="flex justify-center gap-6">
-            {tabs.map((tab) => {
-              const Icon = tab.icon
-              const isActive = activeTab === tab.id
-              
-              return (
-                <button
-                  key={tab.id}
-                  onClick={function() {
-                    console.log('按钮被点击:', tab.id, '标签:', tab.label)
-                    setActiveTab(tab.id)
-                  }}
-                  className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all duration-300 ${
-                    isActive 
-                      ? `${tab.bgColor} ${tab.borderColor} shadow-lg` 
-                      : 'bg-white border-gray-200 hover:shadow-md'
-                  }`}
-                >
-                  <Icon className={`w-6 h-6 mb-1 ${isActive ? tab.color : 'text-gray-600'}`} />
-                  <span className={`text-xs font-medium ${
-                    isActive ? tab.color : 'text-gray-700'
-                  }`}>
-                    {tab.label}
-                  </span>
-                </button>
-              )
-            })}
+            {/* 线稿图按钮 */}
+            <button
+              onClick={handleLineArtClick}
+              className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all duration-300 ${
+                activeTab === 'line-art' 
+                  ? 'bg-amber-100 border-amber-300 shadow-lg' 
+                  : 'bg-white border-gray-200 hover:shadow-md'
+              }`}
+            >
+              <Pen className={`w-6 h-6 mb-1 ${activeTab === 'line-art' ? 'text-amber-600' : 'text-gray-600'}`} />
+              <span className={`text-xs font-medium ${
+                activeTab === 'line-art' ? 'text-amber-600' : 'text-gray-700'
+              }`}>
+                线稿图
+              </span>
+            </button>
+
+            {/* 三视图按钮 */}
+            <button
+              onClick={handleMultiViewClick}
+              className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all duration-300 ${
+                activeTab === 'multi-view' 
+                  ? 'bg-purple-100 border-purple-300 shadow-lg' 
+                  : 'bg-white border-gray-200 hover:shadow-md'
+              }`}
+            >
+              <Box className={`w-6 h-6 mb-1 ${activeTab === 'multi-view' ? 'text-purple-600' : 'text-gray-600'}`} />
+              <span className={`text-xs font-medium ${
+                activeTab === 'multi-view' ? 'text-purple-600' : 'text-gray-700'
+              }`}>
+                三视图
+              </span>
+            </button>
+
+            {/* 场景融合按钮 */}
+            <button
+              onClick={handleBackgroundClick}
+              className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all duration-300 ${
+                activeTab === 'background' 
+                  ? 'bg-green-100 border-green-300 shadow-lg' 
+                  : 'bg-white border-gray-200 hover:shadow-md'
+              }`}
+            >
+              <ImageIcon className={`w-6 h-6 mb-1 ${activeTab === 'background' ? 'text-green-600' : 'text-gray-600'}`} />
+              <span className={`text-xs font-medium ${
+                activeTab === 'background' ? 'text-green-600' : 'text-gray-700'
+              }`}>
+                场景融合
+              </span>
+            </button>
           </div>
         </section>
 

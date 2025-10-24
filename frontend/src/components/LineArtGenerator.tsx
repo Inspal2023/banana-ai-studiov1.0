@@ -134,85 +134,88 @@ export default function LineArtGenerator({
   }
 
   return (
-    <div className="flex gap-4">
-      {/* 左侧操作区 */}
-      <div className="card-elevated w-[400px] flex-shrink-0 p-4">
-          <h2 className="section-title-decorated text-lg mb-3">上传图片</h2>
-
-          <ImageUpload 
-            onImageSelect={handleImageSelect}
-            onImageRemove={handleImageRemove}
-            previewUrl={imageState.previewUrl}
-          />
-
-          {imageState.previewUrl && (
-            <div className="space-y-3 mt-3">
-              {/* 线稿类型选择 */}
-              <div>
-                <label className="section-title-decorated text-sm mb-2">选择线稿类型</label>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setLineArtType('technical')}
-                    className={`flex-1 option-button ${
-                      lineArtType === 'technical' ? 'option-selected' : 'option-unselected'
-                    }`}
-                  >
-                    工程线稿
-                  </button>
-                  <button
-                    onClick={() => setLineArtType('concept')}
-                    className={`flex-1 option-button ${
-                      lineArtType === 'concept' ? 'option-selected' : 'option-unselected'
-                    }`}
-                  >
-                    概念线稿
-                  </button>
-                </div>
-              </div>
-
-              {/* 生成按钮 */}
+    <div className="space-y-6">
+      {/* 上传图片区域 */}
+      <div className="card-elevated p-4">
+        <h2 className="section-title-decorated text-lg mb-3">上传图片</h2>
+        <ImageUpload 
+          onImageSelect={handleImageSelect}
+          onImageRemove={handleImageRemove}
+          previewUrl={imageState.previewUrl}
+        />
+        {imageState.previewUrl && (
+          <div className="mt-3">
+            <label className="section-title-decorated text-sm mb-2">选择线稿类型</label>
+            <div className="flex gap-2">
               <button
-                onClick={handleGenerate}
-                disabled={isGenerating}
-                className="btn-primary flex items-center justify-center"
+                onClick={() => setLineArtType('technical')}
+                className={`flex-1 option-button ${
+                  lineArtType === 'technical' ? 'option-selected' : 'option-unselected'
+                }`}
               >
-                {isGenerating ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    <span className="button-text-enhanced text-sm">生成中...</span>
-                  </>
-                ) : (
-                  <span className="button-text-enhanced text-sm">开始生成</span>
-                )}
+                工程线稿
+              </button>
+              <button
+                onClick={() => setLineArtType('concept')}
+                className={`flex-1 option-button ${
+                  lineArtType === 'concept' ? 'option-selected' : 'option-unselected'
+                }`}
+              >
+                概念线稿
               </button>
             </div>
-          )}
+          </div>
+        )}
+      </div>
 
-          {error && (
-            <div className="mt-3 p-3 bg-semantic-error/10 border-2 border-semantic-error rounded-md text-semantic-error text-xs">
-              {error}
-            </div>
-          )}
-        </div>
-
-      {/* 右侧结果区 */}
-      <div className="card-result w-[420px] flex-shrink-0 p-4">
-          <h2 className="section-title-decorated text-lg mb-3">生成结果</h2>
-
+      {/* 生成按钮区域 - 固定位置 */}
+      <div className="flex justify-center py-2">
+        <button
+          onClick={handleGenerate}
+          disabled={!imageState.file || isGenerating}
+          className={`btn-primary flex items-center justify-center px-8 py-3 text-lg font-medium transition-all duration-300 transform hover:scale-105 ${
+            !imageState.file 
+              ? 'opacity-50 cursor-not-allowed bg-gray-400' 
+              : isGenerating 
+                ? 'opacity-75 cursor-wait'
+                : 'hover:shadow-xl hover:from-amber-600 hover:to-orange-600'
+          }`}
+        >
           {isGenerating ? (
-            <div className="h-[300px] bg-neutral-50 rounded-md flex flex-col items-center justify-center">
-              <div className="image-skeleton w-full h-full rounded-md"></div>
-            </div>
-          ) : resultUrl ? (
-            <div className="result-fade-in">
-              <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
-            </div>
+            <>
+              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              <span className="button-text-enhanced">生成中...</span>
+            </>
           ) : (
-            <div className="h-[300px] bg-neutral-50 rounded-md flex items-center justify-center">
-              <p className="description-text-gradient text-neutral-600 text-sm">生成的线稿图将显示在这里</p>
-            </div>
+            <span className="button-text-enhanced">开始生成</span>
           )}
+        </button>
+      </div>
+
+      {/* 结果展示区域 */}
+      <div className="card-result p-4">
+        <h2 className="section-title-decorated text-lg mb-3">生成结果</h2>
+        {isGenerating ? (
+          <div className="h-[400px] bg-neutral-50 rounded-md flex flex-col items-center justify-center">
+            <div className="image-skeleton w-full h-full rounded-md"></div>
+            <p className="mt-4 text-neutral-600 text-sm">AI正在生成您的线稿图，请稍候...</p>
+          </div>
+        ) : resultUrl ? (
+          <div className="result-fade-in">
+            <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
+          </div>
+        ) : (
+          <div className="h-[400px] bg-neutral-50 rounded-md flex items-center justify-center">
+            <p className="description-text-gradient text-neutral-600 text-sm">上传图片后点击"开始生成"，线稿图将显示在这里</p>
+          </div>
+        )}
+      </div>
+
+      {error && (
+        <div className="p-3 bg-semantic-error/10 border-2 border-semantic-error rounded-md text-semantic-error text-xs">
+          {error}
         </div>
+      )}
     </div>
   )
 }

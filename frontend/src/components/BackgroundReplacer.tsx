@@ -235,10 +235,12 @@ export default function BackgroundReplacer({
           {/* 模式选择 */}
           <div className="mb-3">
             <label className="section-title-decorated text-sm mb-2">选择模式</label>
+            <div className="text-xs text-gray-600 mb-2">场景融合：让图片与新场景完美融合</div>
             <div className="grid grid-cols-3 gap-2">
               <button
                 onClick={() => setMode('text')}
                 className={`option-button text-xs ${mode === 'text' ? 'option-selected' : 'option-unselected'}`}
+                title="通过文字描述来修改主图图片背景/场景"
               >
                 <span className="flex items-center justify-center gap-1">
                   <MessageSquare className="w-3 h-3" />
@@ -248,6 +250,7 @@ export default function BackgroundReplacer({
               <button
                 onClick={() => setMode('image')}
                 className={`option-button text-xs ${mode === 'image' ? 'option-selected' : 'option-unselected'}`}
+                title="通过上传另外的图片来修改主图背景/场景"
               >
                 <span className="flex items-center justify-center gap-1">
                   <ImageIcon className="w-3 h-3" />
@@ -257,6 +260,7 @@ export default function BackgroundReplacer({
               <button
                 onClick={() => setMode('hybrid')}
                 className={`option-button text-xs ${mode === 'hybrid' ? 'option-selected' : 'option-unselected'}`}
+                title="通过文字描述和另外的图片来修改主图背景/场景"
               >
                 <span className="flex items-center justify-center gap-1">
                   <Layers className="w-3 h-3" />

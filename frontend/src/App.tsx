@@ -29,7 +29,7 @@ function App() {
   const tabs = [
     {
       id: 'line-art' as Tab,
-      label: '线稿图生成',
+      label: '线稿图',
       icon: Pen,
       color: 'text-amber-600',
       bgColor: 'bg-amber-100',
@@ -37,7 +37,7 @@ function App() {
     },
     {
       id: 'multi-view' as Tab,
-      label: '三视图生成',
+      label: '三视图',
       icon: Box,
       color: 'text-purple-600',
       bgColor: 'bg-purple-100',
@@ -45,7 +45,7 @@ function App() {
     },
     {
       id: 'background' as Tab,
-      label: '背景替换',
+      label: '场景融合',
       icon: ImageIcon,
       color: 'text-green-600',
       bgColor: 'bg-green-100',
@@ -107,7 +107,10 @@ function App() {
               return (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={function() {
+                    console.log('按钮被点击:', tab.id, '标签:', tab.label)
+                    setActiveTab(tab.id)
+                  }}
                   className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all duration-300 ${
                     isActive 
                       ? `${tab.bgColor} ${tab.borderColor} shadow-lg` 

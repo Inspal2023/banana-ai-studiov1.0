@@ -227,39 +227,39 @@ export default function BackgroundReplacer({
   }
 
   return (
-    <div className="flex gap-xxxl">
+    <div className="flex gap-4">
       {/* 左侧操作区 */}
-      <div className="card-elevated w-[480px] flex-shrink-0 p-xxl">
-          <h2 className="section-title-decorated text-xl mb-xl">上传图片</h2>
+      <div className="card-elevated w-[400px] flex-shrink-0 p-4">
+          <h2 className="section-title-decorated text-lg mb-3">上传图片</h2>
 
           {/* 模式选择 */}
-          <div className="mb-xl">
-            <label className="section-title-decorated text-sm mb-md">选择模式</label>
-            <div className="grid grid-cols-3 gap-md">
+          <div className="mb-3">
+            <label className="section-title-decorated text-sm mb-2">选择模式</label>
+            <div className="grid grid-cols-3 gap-2">
               <button
                 onClick={() => setMode('text')}
-                className={`option-button ${mode === 'text' ? 'option-selected' : 'option-unselected'}`}
+                className={`option-button text-xs ${mode === 'text' ? 'option-selected' : 'option-unselected'}`}
               >
-                <span className="flex items-center justify-center gap-2">
-                  <MessageSquare className="w-4 h-4" />
+                <span className="flex items-center justify-center gap-1">
+                  <MessageSquare className="w-3 h-3" />
                   文字描述
                 </span>
               </button>
               <button
                 onClick={() => setMode('image')}
-                className={`option-button ${mode === 'image' ? 'option-selected' : 'option-unselected'}`}
+                className={`option-button text-xs ${mode === 'image' ? 'option-selected' : 'option-unselected'}`}
               >
-                <span className="flex items-center justify-center gap-2">
-                  <ImageIcon className="w-4 h-4" />
+                <span className="flex items-center justify-center gap-1">
+                  <ImageIcon className="w-3 h-3" />
                   上传图片
                 </span>
               </button>
               <button
                 onClick={() => setMode('hybrid')}
-                className={`option-button ${mode === 'hybrid' ? 'option-selected' : 'option-unselected'}`}
+                className={`option-button text-xs ${mode === 'hybrid' ? 'option-selected' : 'option-unselected'}`}
               >
-                <span className="flex items-center justify-center gap-2">
-                  <Layers className="w-4 h-4" />
+                <span className="flex items-center justify-center gap-1">
+                  <Layers className="w-3 h-3" />
                   混合模式
                 </span>
               </button>
@@ -267,8 +267,8 @@ export default function BackgroundReplacer({
           </div>
 
           {/* 主体图片 */}
-          <div className="mb-xl">
-            <label className="section-title-decorated text-sm mb-md">主体图片</label>
+          <div className="mb-3">
+            <label className="section-title-decorated text-sm mb-2">主体图片</label>
             <ImageUpload 
               onImageSelect={handleImageSelect}
               onImageRemove={handleImageRemove}
@@ -278,11 +278,11 @@ export default function BackgroundReplacer({
           </div>
 
           {subjectImage.previewUrl && (
-            <div className="space-y-xl">
+            <div className="space-y-3">
               {/* 背景图片（图片模式/混合模式） */}
               {(mode === 'image' || mode === 'hybrid') && (
                 <div>
-                  <label className="section-title-decorated text-sm mb-md">背景图片</label>
+                  <label className="section-title-decorated text-sm mb-2">背景图片</label>
                   <ImageUpload 
                     onImageSelect={handleBackgroundSelect}
                     onImageRemove={handleBackgroundRemove}
@@ -295,7 +295,7 @@ export default function BackgroundReplacer({
               {/* 文本描述（文字模式/混合模式） */}
               {(mode === 'text' || mode === 'hybrid') && (
                 <div>
-                  <label className="section-title-decorated text-sm mb-md">
+                  <label className="section-title-decorated text-sm mb-2">
                     {mode === 'hybrid' ? '修改描述' : '背景描述'}
                   </label>
                   <div className="relative">
@@ -303,17 +303,17 @@ export default function BackgroundReplacer({
                       value={textPrompt}
                       onChange={(e) => setTextPrompt(e.target.value)}
                       placeholder="例如：现代简约客厅，温暖的自然光线，木地板背景"
-                      className="input-elevated w-full h-24 px-lg py-md pb-12 text-neutral-900 placeholder-neutral-600 resize-none"
+                      className="input-elevated w-full h-20 px-3 py-2 pb-10 text-neutral-900 placeholder-neutral-600 resize-none text-sm"
                     />
                     <button
                       onClick={handleOptimizePrompt}
                       disabled={optimizing || isGenerating || !textPrompt.trim()}
-                      className="absolute bottom-2 right-2 px-3 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1.5 text-sm hover:scale-105 shadow-md"
+                      className="absolute bottom-1 right-1 px-2 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1 text-xs hover:scale-105 shadow-md"
                     >
                       {optimizing ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <Loader2 className="w-3 h-3 animate-spin" />
                       ) : (
-                        <Sparkles className="w-4 h-4" />
+                        <Sparkles className="w-3 h-3" />
                       )}
                       <span className="font-medium">{optimizing ? '优化中' : '优化'}</span>
                     </button>
@@ -329,29 +329,29 @@ export default function BackgroundReplacer({
               >
                 {isGenerating ? (
                   <>
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                    <span className="button-text-enhanced">生成中...</span>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    <span className="button-text-enhanced text-sm">生成中...</span>
                   </>
                 ) : (
-                  <span className="button-text-enhanced">开始生成</span>
+                  <span className="button-text-enhanced text-sm">开始生成</span>
                 )}
               </button>
             </div>
           )}
 
           {error && (
-            <div className="mt-xl p-lg bg-semantic-error/10 border-2 border-semantic-error rounded-md text-semantic-error text-sm">
+            <div className="mt-3 p-3 bg-semantic-error/10 border-2 border-semantic-error rounded-md text-semantic-error text-xs">
               {error}
             </div>
           )}
         </div>
 
       {/* 右侧结果区 */}
-      <div className="card-result w-[520px] flex-shrink-0 p-xxl">
-          <h2 className="section-title-decorated text-xl mb-xl">生成结果</h2>
+      <div className="card-result w-[420px] flex-shrink-0 p-4">
+          <h2 className="section-title-decorated text-lg mb-3">生成结果</h2>
 
           {isGenerating ? (
-            <div className="h-[360px] bg-neutral-50 rounded-md flex flex-col items-center justify-center">
+            <div className="h-[300px] bg-neutral-50 rounded-md flex flex-col items-center justify-center">
               <div className="image-skeleton w-full h-full rounded-md"></div>
             </div>
           ) : resultUrl ? (
@@ -359,8 +359,8 @@ export default function BackgroundReplacer({
               <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
             </div>
           ) : (
-            <div className="h-[360px] bg-neutral-50 rounded-md flex items-center justify-center">
-              <p className="description-text-gradient text-neutral-600">更换后的图片将显示在这里</p>
+            <div className="h-[300px] bg-neutral-50 rounded-md flex items-center justify-center">
+              <p className="description-text-gradient text-neutral-600 text-sm">更换后的图片将显示在这里</p>
             </div>
           )}
         </div>

@@ -83,23 +83,23 @@ function App() {
       {/* 主内容区域 */}
       <div className="relative z-10">
         {/* 标题区域 */}
-        <header className="text-center py-12">
-          <div className="flex items-center justify-center mb-4">
+        <header className="text-center py-6">
+          <div className="flex items-center justify-center mb-2">
             <img 
               src="/banana-superhero-logo-transparent.png" 
               alt="香蕉小超人" 
-              className="w-20 h-20 object-contain mr-4"
+              className="w-16 h-16 object-contain mr-3"
             />
-            <h1 className="text-4xl font-bold text-amber-800">香蕉AI工作室</h1>
+            <h1 className="text-3xl font-bold text-amber-800">香蕉AI工作室</h1>
           </div>
-          <p className="text-lg text-amber-700 max-w-2xl mx-auto px-4">
+          <p className="text-sm text-amber-700 max-w-2xl mx-auto px-4">
             上传您的图片，体验AI驱动的创意图像处理技术
           </p>
         </header>
 
         {/* 功能选择区域 */}
-        <section className="max-w-4xl mx-auto px-4 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <section className="max-w-4xl mx-auto px-4 mb-6">
+          <div className="flex justify-center gap-6">
             {tabs.map((tab) => {
               const Icon = tab.icon
               const isActive = activeTab === tab.id
@@ -108,14 +108,14 @@ function App() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`p-6 rounded-xl border-2 transition-all duration-300 ${
+                  className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all duration-300 ${
                     isActive 
-                      ? `${tab.bgColor} ${tab.borderColor} shadow-lg scale-105` 
-                      : 'bg-white border-gray-200 hover:shadow-md hover:scale-102'
+                      ? `${tab.bgColor} ${tab.borderColor} shadow-lg` 
+                      : 'bg-white border-gray-200 hover:shadow-md'
                   }`}
                 >
-                  <Icon className={`w-8 h-8 mx-auto mb-3 ${isActive ? tab.color : 'text-gray-600'}`} />
-                  <span className={`block text-lg font-semibold ${
+                  <Icon className={`w-6 h-6 mb-1 ${isActive ? tab.color : 'text-gray-600'}`} />
+                  <span className={`text-xs font-medium ${
                     isActive ? tab.color : 'text-gray-700'
                   }`}>
                     {tab.label}
@@ -127,8 +127,8 @@ function App() {
         </section>
 
         {/* 主内容区域 */}
-        <main className="max-w-6xl mx-auto px-4 pb-12">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8">
+        <main className="max-w-5xl mx-auto px-4 pb-8">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-xl p-4">
             {activeTab === 'line-art' && (
               <LineArtGenerator 
                 imageState={sharedImage}
@@ -165,32 +165,32 @@ function App() {
         </main>
 
         {/* 使用说明 */}
-        <section className="max-w-4xl mx-auto px-4 pb-12">
-          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6">
-            <h2 className="text-2xl font-bold text-amber-800 mb-4 text-center">如何使用</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section className="max-w-4xl mx-auto px-4 pb-8">
+          <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4">
+            <h2 className="text-lg font-bold text-amber-800 mb-3 text-center">如何使用</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
-                <div className="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">1</div>
-                <h3 className="font-semibold text-amber-800 mb-2">上传照片</h3>
-                <p className="text-sm text-amber-700">选择一张清晰的图片，支持JPG、PNG、WEBP格式</p>
+                <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">1</div>
+                <h3 className="font-semibold text-amber-800 mb-1">上传照片</h3>
+                <p className="text-xs text-amber-700">选择一张清晰的图片，支持JPG、PNG、WEBP格式</p>
               </div>
               <div className="text-center">
-                <div className="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">2</div>
-                <h3 className="font-semibold text-amber-800 mb-2">AI处理</h3>
-                <p className="text-sm text-amber-700">选择功能后，AI会分析您的图片并进行相应的处理</p>
+                <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">2</div>
+                <h3 className="font-semibold text-amber-800 mb-1">AI处理</h3>
+                <p className="text-xs text-amber-700">选择功能后，AI会分析您的图片并进行相应的处理</p>
               </div>
               <div className="text-center">
-                <div className="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">3</div>
-                <h3 className="font-semibold text-amber-800 mb-2">获得结果</h3>
-                <p className="text-sm text-amber-700">几秒钟后，您将获得处理后的创意图片结果</p>
+                <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">3</div>
+                <h3 className="font-semibold text-amber-800 mb-1">获得结果</h3>
+                <p className="text-xs text-amber-700">几秒钟后，您将获得处理后的创意图片结果</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* 版权信息 */}
-        <footer className="text-center py-6">
-          <p className="text-amber-600">Created by 香蕉AI工作室</p>
+        <footer className="text-center py-4">
+          <p className="text-sm text-amber-600">Created by 香蕉AI工作室</p>
         </footer>
       </div>
     </div>

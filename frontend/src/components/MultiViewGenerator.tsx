@@ -128,10 +128,10 @@ export default function MultiViewGenerator({
   }
 
   return (
-    <div className="flex gap-xxxl">
+    <div className="flex gap-4">
       {/* 左侧操作区 */}
-      <div className="card-elevated w-[480px] flex-shrink-0 p-xxl">
-          <h2 className="section-title-decorated text-xl mb-xl">上传图片</h2>
+      <div className="card-elevated w-[400px] flex-shrink-0 p-4">
+          <h2 className="section-title-decorated text-lg mb-3">上传图片</h2>
 
           <ImageUpload 
             onImageSelect={handleImageSelect}
@@ -140,7 +140,7 @@ export default function MultiViewGenerator({
           />
 
           {imageState.previewUrl && (
-            <div className="space-y-xl mt-xl">
+            <div className="space-y-3 mt-3">
               {/* 生成按钮 */}
               <button
                 onClick={handleGenerate}
@@ -149,29 +149,29 @@ export default function MultiViewGenerator({
               >
                 {isGenerating ? (
                   <>
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                    <span className="button-text-enhanced">生成中...</span>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    <span className="button-text-enhanced text-sm">生成中...</span>
                   </>
                 ) : (
-                  <span className="button-text-enhanced">开始生成</span>
+                  <span className="button-text-enhanced text-sm">开始生成</span>
                 )}
               </button>
             </div>
           )}
 
           {error && (
-            <div className="mt-xl p-lg bg-semantic-error/10 border-2 border-semantic-error rounded-md text-semantic-error text-sm">
+            <div className="mt-3 p-3 bg-semantic-error/10 border-2 border-semantic-error rounded-md text-semantic-error text-xs">
               {error}
             </div>
           )}
         </div>
 
       {/* 右侧结果区 */}
-      <div className="card-result w-[520px] flex-shrink-0 p-xxl">
-          <h2 className="section-title-decorated text-xl mb-xl">生成结果</h2>
+      <div className="card-result w-[420px] flex-shrink-0 p-4">
+          <h2 className="section-title-decorated text-lg mb-3">生成结果</h2>
 
           {isGenerating ? (
-            <div className="h-[360px] bg-neutral-50 rounded-md flex flex-col items-center justify-center">
+            <div className="h-[300px] bg-neutral-50 rounded-md flex flex-col items-center justify-center">
               <div className="image-skeleton w-full h-full rounded-md"></div>
             </div>
           ) : resultUrl ? (
@@ -179,8 +179,8 @@ export default function MultiViewGenerator({
               <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
             </div>
           ) : (
-            <div className="h-[360px] bg-neutral-50 rounded-md flex items-center justify-center">
-              <p className="description-text-gradient text-neutral-600">生成的三视图将显示在这里</p>
+            <div className="h-[300px] bg-neutral-50 rounded-md flex items-center justify-center">
+              <p className="description-text-gradient text-neutral-600 text-sm">生成的三视图将显示在这里</p>
             </div>
           )}
         </div>

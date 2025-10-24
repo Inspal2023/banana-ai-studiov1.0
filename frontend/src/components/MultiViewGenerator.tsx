@@ -128,23 +128,24 @@ export default function MultiViewGenerator({
   }
 
   return (
-    <div className="space-y-6">
-      {/* 上传图片区域 */}
-      <div className="card-elevated p-4">
-        <h2 className="section-title-decorated text-lg mb-3">上传图片</h2>
-        <ImageUpload 
-          onImageSelect={handleImageSelect}
-          onImageRemove={handleImageRemove}
-          previewUrl={imageState.previewUrl}
-        />
-      </div>
+    <div className="flex gap-8 max-w-6xl mx-auto">
+      {/* 左侧操作区 */}
+      <div className="flex-1 space-y-4">
+        {/* 上传图片区域 */}
+        <div className="card-elevated p-3">
+          <h2 className="section-title-decorated text-sm mb-2">上传图片</h2>
+          <ImageUpload 
+            onImageSelect={handleImageSelect}
+            onImageRemove={handleImageRemove}
+            previewUrl={imageState.previewUrl}
+          />
+        </div>
 
-      {/* 生成按钮区域 - 固定位置 */}
-      <div className="flex justify-center py-2">
+        {/* 生成按钮 */}
         <button
           onClick={handleGenerate}
           disabled={!imageState.file || isGenerating}
-          className={`btn-primary flex items-center justify-center px-8 py-3 text-lg font-medium transition-all duration-300 transform hover:scale-105 ${
+          className={`w-full btn-primary flex items-center justify-center py-3 text-sm font-medium transition-all duration-300 ${
             !imageState.file 
               ? 'opacity-50 cursor-not-allowed bg-gray-400' 
               : isGenerating 
@@ -154,7 +155,7 @@ export default function MultiViewGenerator({
         >
           {isGenerating ? (
             <>
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               <span className="button-text-enhanced">生成中...</span>
             </>
           ) : (
@@ -163,27 +164,29 @@ export default function MultiViewGenerator({
         </button>
       </div>
 
-      {/* 结果展示区域 */}
-      <div className="card-result p-4">
-        <h2 className="section-title-decorated text-lg mb-3">生成结果</h2>
-        {isGenerating ? (
-          <div className="h-[400px] bg-neutral-50 rounded-md flex flex-col items-center justify-center">
-            <div className="image-skeleton w-full h-full rounded-md"></div>
-            <p className="mt-4 text-neutral-600 text-sm">AI正在生成您的三视图，请稍候...</p>
-          </div>
-        ) : resultUrl ? (
-          <div className="result-fade-in">
-            <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
-          </div>
-        ) : (
-          <div className="h-[400px] bg-neutral-50 rounded-md flex items-center justify-center">
-            <p className="description-text-gradient text-neutral-600 text-sm">上传图片后点击"开始生成"，三视图将显示在这里</p>
-          </div>
-        )}
+      {/* 右侧结果区 */}
+      <div className="flex-1">
+        <div className="card-result p-3 h-full">
+          <h2 className="section-title-decorated text-sm mb-3">生成结果</h2>
+          {isGenerating ? (
+            <div className="h-80 bg-neutral-50 rounded-md flex flex-col items-center justify-center">
+              <div className="image-skeleton w-full h-60 rounded-md"></div>
+              <p className="mt-2 text-neutral-600 text-xs">AI正在生成您的三视图，请稍候...</p>
+            </div>
+          ) : resultUrl ? (
+            <div className="result-fade-in h-80">
+              <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
+            </div>
+          ) : (
+            <div className="h-80 bg-neutral-50 rounded-md flex items-center justify-center">
+              <p className="description-text-gradient text-neutral-600 text-xs text-center px-4">上传图片后点击"开始生成"，三视图将显示在这里</p>
+            </div>
+          )}
+        </div>
       </div>
 
       {error && (
-        <div className="p-3 bg-semantic-error/10 border-2 border-semantic-error rounded-md text-semantic-error text-xs">
+        <div className="absolute bottom-4 left-4 right-4 p-2 bg-semantic-error/10 border border-semantic-error rounded-md text-semantic-error text-xs">
           {error}
         </div>
       )}

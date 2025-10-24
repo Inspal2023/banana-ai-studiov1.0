@@ -227,154 +227,150 @@ export default function BackgroundReplacer({
   }
 
   return (
-    <div className="space-y-6">
-      {/* 模式选择区域 */}
-      <div className="card-elevated p-4">
-        <label className="section-title-decorated text-sm mb-3 block">选择模式</label>
-        <div className="text-xs text-gray-600 mb-3">场景融合：让图片与新场景完美融合</div>
-        <div className="grid grid-cols-3 gap-2">
-          <button
-            onClick={() => setMode('text')}
-            className={`option-button text-xs ${mode === 'text' ? 'option-selected' : 'option-unselected'}`}
-            title="通过文字描述来修改主图图片背景/场景"
-          >
-            <span className="flex items-center justify-center gap-1">
-              <MessageSquare className="w-3 h-3" />
-              文字描述
-            </span>
-          </button>
-          <button
-            onClick={() => setMode('image')}
-            className={`option-button text-xs ${mode === 'image' ? 'option-selected' : 'option-unselected'}`}
-            title="通过上传另外的图片来修改主图背景/场景"
-          >
-            <span className="flex items-center justify-center gap-1">
-              <ImageIcon className="w-3 h-3" />
-              上传图片
-            </span>
-          </button>
-          <button
-            onClick={() => setMode('hybrid')}
-            className={`option-button text-xs ${mode === 'hybrid' ? 'option-selected' : 'option-unselected'}`}
-            title="通过文字描述和另外的图片来修改主图背景/场景"
-          >
-            <span className="flex items-center justify-center gap-1">
-              <Layers className="w-3 h-3" />
-              混合模式
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* 上传图片区域 */}
-      <div className="card-elevated p-4">
-        <h2 className="section-title-decorated text-lg mb-3">上传图片</h2>
-        
-        <div className="space-y-4">
-          {/* 主体图片 */}
-          <div>
-            <label className="section-title-decorated text-sm mb-2">主体图片</label>
-            <ImageUpload 
-              onImageSelect={handleImageSelect}
-              onImageRemove={handleImageRemove}
-              previewUrl={subjectImage.previewUrl}
-              label="上传主体图片" 
-            />
+    <div className="flex gap-8 max-w-6xl mx-auto">
+      {/* 左侧操作区 */}
+      <div className="flex-1 space-y-3">
+        {/* 模式选择区域 */}
+        <div className="card-elevated p-3">
+          <label className="section-title-decorated text-xs mb-2 block">选择模式</label>
+          <div className="text-xs text-gray-600 mb-2">场景融合：让图片与新场景完美融合</div>
+          <div className="grid grid-cols-3 gap-1">
+            <button
+              onClick={() => setMode('text')}
+              className={`option-button text-xs py-2 ${mode === 'text' ? 'option-selected' : 'option-unselected'}`}
+              title="通过文字描述来修改主图图片背景/场景"
+            >
+              <span className="flex items-center justify-center gap-1">
+                <MessageSquare className="w-3 h-3" />
+                文字描述
+              </span>
+            </button>
+            <button
+              onClick={() => setMode('image')}
+              className={`option-button text-xs py-2 ${mode === 'image' ? 'option-selected' : 'option-unselected'}`}
+              title="通过上传另外的图片来修改主图背景/场景"
+            >
+              <span className="flex items-center justify-center gap-1">
+                <ImageIcon className="w-3 h-3" />
+                上传图片
+              </span>
+            </button>
+            <button
+              onClick={() => setMode('hybrid')}
+              className={`option-button text-xs py-2 ${mode === 'hybrid' ? 'option-selected' : 'option-unselected'}`}
+              title="通过文字描述和另外的图片来修改主图背景/场景"
+            >
+              <span className="flex items-center justify-center gap-1">
+                <Layers className="w-3 h-3" />
+                混合模式
+              </span>
+            </button>
           </div>
+        </div>
 
-          {subjectImage.previewUrl && (
-            <>
-              {/* 背景图片（图片模式/混合模式） */}
-              {(mode === 'image' || mode === 'hybrid') && (
-                <div>
-                  <label className="section-title-decorated text-sm mb-2">背景图片</label>
-                  <ImageUpload 
-                    onImageSelect={handleBackgroundSelect}
-                    onImageRemove={handleBackgroundRemove}
-                    previewUrl={backgroundImage.previewUrl}
-                    label="上传背景图片" 
+        {/* 主体图片上传 */}
+        <div className="card-elevated p-3">
+          <label className="section-title-decorated text-xs mb-2">主体图片</label>
+          <ImageUpload 
+            onImageSelect={handleImageSelect}
+            onImageRemove={handleImageRemove}
+            previewUrl={subjectImage.previewUrl}
+            label="上传主体图片" 
+          />
+        </div>
+
+        {subjectImage.previewUrl && (
+          <>
+            {/* 背景图片（图片模式/混合模式） */}
+            {(mode === 'image' || mode === 'hybrid') && (
+              <div className="card-elevated p-3">
+                <label className="section-title-decorated text-xs mb-2">背景图片</label>
+                <ImageUpload 
+                  onImageSelect={handleBackgroundSelect}
+                  onImageRemove={handleBackgroundRemove}
+                  previewUrl={backgroundImage.previewUrl}
+                  label="上传背景图片" 
+                />
+              </div>
+            )}
+
+            {/* 文本描述（文字模式/混合模式） */}
+            {(mode === 'text' || mode === 'hybrid') && (
+              <div className="card-elevated p-3">
+                <label className="section-title-decorated text-xs mb-2">
+                  {mode === 'hybrid' ? '修改描述' : '背景描述'}
+                </label>
+                <div className="relative">
+                  <textarea
+                    value={textPrompt}
+                    onChange={(e) => setTextPrompt(e.target.value)}
+                    placeholder="例如：现代简约客厅，温暖的自然光线，木地板背景"
+                    className="input-elevated w-full h-16 px-3 py-2 pb-8 text-neutral-900 placeholder-neutral-600 resize-none text-xs"
                   />
+                  <button
+                    onClick={handleOptimizePrompt}
+                    disabled={optimizing || isGenerating || !textPrompt.trim()}
+                    className="absolute bottom-1 right-1 px-2 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1 text-xs hover:scale-105 shadow-md"
+                  >
+                    {optimizing ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <Sparkles className="w-3 h-3" />
+                    )}
+                    <span className="font-medium">{optimizing ? '优化中' : '优化'}</span>
+                  </button>
                 </div>
+              </div>
+            )}
+
+            {/* 生成按钮 */}
+            <button
+              onClick={handleGenerate}
+              disabled={!subjectImage.file || isGenerating}
+              className={`w-full btn-primary flex items-center justify-center py-3 text-sm font-medium transition-all duration-300 ${
+                !subjectImage.file 
+                  ? 'opacity-50 cursor-not-allowed bg-gray-400' 
+                  : isGenerating 
+                    ? 'opacity-75 cursor-wait'
+                    : 'hover:shadow-xl hover:from-green-600 hover:to-teal-600'
+              }`}
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  <span className="button-text-enhanced">生成中...</span>
+                </>
+              ) : (
+                <span className="button-text-enhanced">开始生成</span>
               )}
-
-              {/* 文本描述（文字模式/混合模式） */}
-              {(mode === 'text' || mode === 'hybrid') && (
-                <div>
-                  <label className="section-title-decorated text-sm mb-2">
-                    {mode === 'hybrid' ? '修改描述' : '背景描述'}
-                  </label>
-                  <div className="relative">
-                    <textarea
-                      value={textPrompt}
-                      onChange={(e) => setTextPrompt(e.target.value)}
-                      placeholder="例如：现代简约客厅，温暖的自然光线，木地板背景"
-                      className="input-elevated w-full h-20 px-3 py-2 pb-10 text-neutral-900 placeholder-neutral-600 resize-none text-sm"
-                    />
-                    <button
-                      onClick={handleOptimizePrompt}
-                      disabled={optimizing || isGenerating || !textPrompt.trim()}
-                      className="absolute bottom-1 right-1 px-2 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1 text-xs hover:scale-105 shadow-md"
-                    >
-                      {optimizing ? (
-                        <Loader2 className="w-3 h-3 animate-spin" />
-                      ) : (
-                        <Sparkles className="w-3 h-3" />
-                      )}
-                      <span className="font-medium">{optimizing ? '优化中' : '优化'}</span>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      </div>
-
-      {/* 生成按钮区域 - 固定位置 */}
-      <div className="flex justify-center py-2">
-        <button
-          onClick={handleGenerate}
-          disabled={!subjectImage.file || isGenerating}
-          className={`btn-primary flex items-center justify-center px-8 py-3 text-lg font-medium transition-all duration-300 transform hover:scale-105 ${
-            !subjectImage.file 
-              ? 'opacity-50 cursor-not-allowed bg-gray-400' 
-              : isGenerating 
-                ? 'opacity-75 cursor-wait'
-                : 'hover:shadow-xl hover:from-green-600 hover:to-teal-600'
-          }`}
-        >
-          {isGenerating ? (
-            <>
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-              <span className="button-text-enhanced">生成中...</span>
-            </>
-          ) : (
-            <span className="button-text-enhanced">开始生成</span>
-          )}
-        </button>
-      </div>
-
-      {/* 结果展示区域 */}
-      <div className="card-result p-4">
-        <h2 className="section-title-decorated text-lg mb-3">生成结果</h2>
-        {isGenerating ? (
-          <div className="h-[400px] bg-neutral-50 rounded-md flex flex-col items-center justify-center">
-            <div className="image-skeleton w-full h-full rounded-md"></div>
-            <p className="mt-4 text-neutral-600 text-sm">AI正在融合您的图片场景，请稍候...</p>
-          </div>
-        ) : resultUrl ? (
-          <div className="result-fade-in">
-            <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
-          </div>
-        ) : (
-          <div className="h-[400px] bg-neutral-50 rounded-md flex items-center justify-center">
-            <p className="description-text-gradient text-neutral-600 text-sm">上传图片后点击"开始生成"，融合后的图片将显示在这里</p>
-          </div>
+            </button>
+          </>
         )}
       </div>
 
+      {/* 右侧结果区 */}
+      <div className="flex-1">
+        <div className="card-result p-3 h-full">
+          <h2 className="section-title-decorated text-sm mb-3">生成结果</h2>
+          {isGenerating ? (
+            <div className="h-80 bg-neutral-50 rounded-md flex flex-col items-center justify-center">
+              <div className="image-skeleton w-full h-60 rounded-md"></div>
+              <p className="mt-2 text-neutral-600 text-xs">AI正在融合您的图片场景，请稍候...</p>
+            </div>
+          ) : resultUrl ? (
+            <div className="result-fade-in h-80">
+              <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
+            </div>
+          ) : (
+            <div className="h-80 bg-neutral-50 rounded-md flex items-center justify-center">
+              <p className="description-text-gradient text-neutral-600 text-xs text-center px-4">上传图片后点击"开始生成"，融合后的图片将显示在这里</p>
+            </div>
+          )}
+        </div>
+      </div>
+
       {error && (
-        <div className="p-3 bg-semantic-error/10 border-2 border-semantic-error rounded-md text-semantic-error text-xs">
+        <div className="absolute bottom-4 left-4 right-4 p-2 bg-semantic-error/10 border border-semantic-error rounded-md text-semantic-error text-xs">
           {error}
         </div>
       )}

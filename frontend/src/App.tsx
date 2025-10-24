@@ -170,8 +170,8 @@ function App() {
         </section>
 
         {/* 主内容区域 */}
-        <main className="max-w-5xl mx-auto px-4 pb-8">
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-xl p-4">
+        <main className="max-w-6xl mx-auto px-6 pb-8">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-xl p-6">
             {activeTab === 'line-art' && (
               <LineArtGenerator 
                 imageState={sharedImage}

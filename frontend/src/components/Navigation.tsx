@@ -19,7 +19,7 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
           <div className="flex items-center space-x-3">
             <div className="w-16 h-16 flex items-center justify-center">
               <img 
-                src="/logo-transparent.png" 
+                src="/banana-superhero-logo.png" 
                 alt="Banana AI Studio Logo" 
                 className="w-full h-full object-contain"
               />

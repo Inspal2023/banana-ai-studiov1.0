@@ -1,5 +1,3 @@
-import { Banana } from 'lucide-react'
-
 type Tab = 'line-art' | 'multi-view' | 'background'
 
 interface NavigationProps {
@@ -19,8 +17,12 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-18">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center">
-              <Banana className="w-6 h-6 text-neutral-900" />
+            <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
+              <img 
+                src="/banana-logo.jpg" 
+                alt="Banana AI Studio Logo" 
+                className="w-full h-full object-contain"
+              />
             </div>
             <h1 className="text-2xl font-bold text-neutral-50">香蕉AI工作室</h1>
           </div>

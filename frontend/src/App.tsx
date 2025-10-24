@@ -93,7 +93,7 @@ function App() {
             <h1 className="text-3xl font-bold text-amber-800">香蕉AI工作室</h1>
           </div>
           <p className="text-sm text-amber-700 max-w-2xl mx-auto px-4">
-            上传您的图片，体验AI驱动的创意图像处理技术
+            上传您的图片，体验AI驱动的强大图像处理技术
           </p>
         </header>
 

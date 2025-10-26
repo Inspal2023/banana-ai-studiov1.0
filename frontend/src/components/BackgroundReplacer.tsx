@@ -184,8 +184,18 @@ export default function BackgroundReplacer({
 
   return (
     <div className="flex items-center justify-center gap-6 max-w-5xl mx-auto">
-      {/* 左侧按钮区 */}
-      <div className="flex flex-col gap-4">
+      {/* 左侧上传区 */}
+      <div className="w-80 h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">上传图片</h2>
+        <ImageUpload 
+          onImageSelect={handleImageSelect}
+          onImageRemove={handleImageRemove}
+          previewUrl={subjectImage.previewUrl}
+        />
+      </div>
+
+      {/* 中间生成按钮区域 */}
+      <div className="flex flex-col items-center gap-4">
         {/* 生成按钮 */}
         <button
           onClick={handleGenerate}
@@ -206,71 +216,58 @@ export default function BackgroundReplacer({
             </svg>
           )}
         </button>
+        
+        {/* 文本描述输入区 */}
+        {subjectImage.previewUrl && (
+          <div className="w-48 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-md border border-gray-200/50">
+            <label className="block text-sm font-medium text-gray-700 mb-2 text-center">背景描述</label>
+            <div className="relative">
+              <textarea
+                value={textPrompt}
+                onChange={(e) => setTextPrompt(e.target.value)}
+                placeholder="例如：现代简约客厅，温暖的自然光线，木地板背景"
+                className="w-full h-16 px-2 py-1 text-xs border border-gray-300 rounded-md resize-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              />
+              <button
+                onClick={handleOptimizePrompt}
+                disabled={optimizing || isGenerating || !textPrompt.trim()}
+                className="absolute bottom-1 right-1 px-2 py-1 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-md hover:from-green-600 hover:to-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1 text-xs"
+              >
+                {optimizing ? (
+                  <Loader2 className="w-3 h-3 animate-spin" />
+                ) : (
+                  <Sparkles className="w-3 h-3" />
+                )}
+                <span className="font-medium">优化</span>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* 右侧内容区 */}
-      <div className="flex gap-6 flex-1">
-        {/* 上传区 */}
-        <div className="w-80 h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">上传图片</h2>
-          <ImageUpload 
-            onImageSelect={handleImageSelect}
-            onImageRemove={handleImageRemove}
-            previewUrl={subjectImage.previewUrl}
-          />
-          
-          {/* 文本描述 */}
-          {subjectImage.previewUrl && (
-            <div className="mt-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">背景描述</label>
-              <div className="relative">
-                <textarea
-                  value={textPrompt}
-                  onChange={(e) => setTextPrompt(e.target.value)}
-                  placeholder="例如：现代简约客厅，温暖的自然光线，木地板背景"
-                  className="w-full h-16 px-3 py-2 text-sm border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                />
-                <button
-                  onClick={handleOptimizePrompt}
-                  disabled={optimizing || isGenerating || !textPrompt.trim()}
-                  className="absolute bottom-2 right-2 px-2 py-1 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-md hover:from-green-600 hover:to-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1 text-xs"
-                >
-                  {optimizing ? (
-                    <Loader2 className="w-3 h-3 animate-spin" />
-                  ) : (
-                    <Sparkles className="w-3 h-3" />
-                  )}
-                  <span className="font-medium">优化</span>
-                </button>
+      {/* 右侧结果区 */}
+      <div className="w-80 h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">生成结果</h2>
+        <div className="h-64">
+          {isGenerating ? (
+            <div className="h-full bg-gray-50 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300">
+              <Loader2 className="w-8 h-8 text-green-500 animate-spin mb-3" />
+              <p className="text-gray-600 text-sm text-center">AI正在融合您的图片场景，请稍候...</p>
+            </div>
+          ) : resultUrl ? (
+            <div className="result-fade-in h-full">
+              <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
+            </div>
+          ) : (
+            <div className="h-full bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
+              <div className="text-center">
+                <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <p className="text-gray-500 text-sm">上传图片并输入背景描述</p>
               </div>
             </div>
           )}
-        </div>
-
-        {/* 结果区 */}
-        <div className="w-80 h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">生成结果</h2>
-          <div className="h-64">
-            {isGenerating ? (
-              <div className="h-full bg-gray-50 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300">
-                <Loader2 className="w-8 h-8 text-green-500 animate-spin mb-3" />
-                <p className="text-gray-600 text-sm text-center">AI正在融合您的图片场景，请稍候...</p>
-              </div>
-            ) : resultUrl ? (
-              <div className="result-fade-in h-full">
-                <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
-              </div>
-            ) : (
-              <div className="h-full bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
-                <div className="text-center">
-                  <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                  </svg>
-                  <p className="text-gray-500 text-sm">上传图片并输入背景描述</p>
-                </div>
-              </div>
-            )}
-          </div>
         </div>
       </div>
 

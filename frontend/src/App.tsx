@@ -185,7 +185,7 @@ function App() {
 
         {/* 使用说明 */}
         <div className="relative">
-          <section className="max-w-4xl mx-auto px-4 pb-8 mt-8">
+          <section className="max-w-4xl mx-auto px-4 pb-8 mt-16">
             <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4">
               <h2 className="text-lg font-bold text-amber-800 mb-3 text-center">如何使用</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

@@ -6,6 +6,53 @@
   <link rel="icon" type="image/png" href="/favicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>香蕉AI工作室</title>
+  <style>
+    @keyframes star-bounce {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+      }
+      25% {
+        transform: scale(1.3);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.9;
+      }
+      75% {
+        transform: scale(1.3);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0.8);
+        opacity: 0.8;
+      }
+    }
+    
+    @keyframes star-sparkle {
+      0%, 100% {
+        filter: brightness(1) drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+      }
+      25% {
+        filter: brightness(1.5) drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+      }
+      50% {
+        filter: brightness(1.2) drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+      }
+      75% {
+        filter: brightness(1.5) drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+      }
+    }
+    
+    .animate-star-bounce {
+      animation: star-bounce 2s ease-in-out infinite;
+    }
+    
+    .animate-star-sparkle {
+      animation: star-sparkle 1.5s ease-in-out infinite;
+    }
+  </style>
 </head>
 
 <body>

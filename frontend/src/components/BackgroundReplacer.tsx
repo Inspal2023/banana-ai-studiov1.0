@@ -33,6 +33,7 @@ export default function BackgroundReplacer({
   setResultUrl
 }: BackgroundReplacerProps) {
   const [textPrompt, setTextPrompt] = useState<string>('')
+  const [mode, setMode] = useState<Mode>('text')
   const [optimizing, setOptimizing] = useState(false)
   const [error, setError] = useState<string>('')
 
@@ -92,8 +93,18 @@ export default function BackgroundReplacer({
 
   const handleGenerate = async () => {
     if (!subjectImage.file) return
-    if (!textPrompt.trim()) {
+    
+    // 根据模式验证输入
+    if (mode === 'text' && !textPrompt.trim()) {
       setError('请输入背景描述')
+      return
+    }
+    if (mode === 'image' && !backgroundImage.file) {
+      setError('请上传背景图片')
+      return
+    }
+    if (mode === 'hybrid' && (!textPrompt.trim() || !backgroundImage.file)) {
+      setError('请同时输入背景描述和上传背景图片')
       return
     }
 
@@ -120,8 +131,9 @@ export default function BackgroundReplacer({
           const { data: replaceData, error: replaceError } = await supabase.functions.invoke('replace-background', {
             body: {
               imageUrl,
-              mode: 'text',
-              textPrompt: textPrompt || undefined
+              mode: mode,
+              textPrompt: mode === 'text' || mode === 'hybrid' ? textPrompt : undefined,
+              backgroundImageUrl: mode === 'image' || mode === 'hybrid' ? imageUrl : undefined
             }
           })
 
@@ -199,9 +211,9 @@ export default function BackgroundReplacer({
         {/* 生成按钮 */}
         <button
           onClick={handleGenerate}
-          disabled={!subjectImage.file || !textPrompt.trim() || isGenerating}
+          disabled={!subjectImage.file || isGenerating}
           className={`w-24 h-24 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg ${
-            !subjectImage.file || !textPrompt.trim()
+            !subjectImage.file 
               ? 'opacity-50 cursor-not-allowed bg-gray-400' 
               : isGenerating 
                 ? 'opacity-75 cursor-wait bg-green-400'
@@ -217,8 +229,50 @@ export default function BackgroundReplacer({
           )}
         </button>
         
-        {/* 文本描述输入区 */}
+        {/* 模式选择 */}
         {subjectImage.previewUrl && (
+          <div className="w-48 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-md border border-gray-200/50">
+            <label className="block text-sm font-medium text-gray-700 mb-2 text-center">融合模式</label>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => setMode('text')}
+                className={`py-1 px-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1 ${
+                  mode === 'text' 
+                    ? 'bg-green-500 text-white shadow-md' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <MessageSquare className="w-3 h-3" />
+                文本模式
+              </button>
+              <button
+                onClick={() => setMode('image')}
+                className={`py-1 px-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1 ${
+                  mode === 'image' 
+                    ? 'bg-green-500 text-white shadow-md' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <ImageIcon className="w-3 h-3" />
+                图片模式
+              </button>
+              <button
+                onClick={() => setMode('hybrid')}
+                className={`py-1 px-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1 ${
+                  mode === 'hybrid' 
+                    ? 'bg-green-500 text-white shadow-md' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <Layers className="w-3 h-3" />
+                混合模式
+              </button>
+            </div>
+          </div>
+        )}
+        
+        {/* 文本描述输入区 */}
+        {(mode === 'text' || mode === 'hybrid') && subjectImage.previewUrl && (
           <div className="w-48 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-md border border-gray-200/50">
             <label className="block text-sm font-medium text-gray-700 mb-2 text-center">背景描述</label>
             <div className="relative">
@@ -243,6 +297,41 @@ export default function BackgroundReplacer({
             </div>
           </div>
         )}
+        
+        {/* 背景图片上传区 */}
+        {(mode === 'image' || mode === 'hybrid') && subjectImage.previewUrl && (
+          <div className="w-48 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-md border border-gray-200/50">
+            <label className="block text-sm font-medium text-gray-700 mb-2 text-center">背景图片</label>
+            {backgroundImage.previewUrl ? (
+              <div className="relative">
+                <img 
+                  src={backgroundImage.previewUrl} 
+                  alt="Background" 
+                  className="w-full h-16 object-cover rounded-md"
+                />
+                <button
+                  onClick={handleBackgroundRemove}
+                  className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center hover:bg-red-600"
+                >
+                  ×
+                </button>
+              </div>
+            ) : (
+              <div className="h-16 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center cursor-pointer hover:border-green-400 transition-colors">
+                <label className="text-xs text-gray-500 text-center cursor-pointer">
+                  <ImageIcon className="w-6 h-6 mx-auto mb-1" />
+                  点击上传
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => e.target.files?.[0] && handleBackgroundSelect(e.target.files[0])}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* 右侧结果区 */}
@@ -264,7 +353,11 @@ export default function BackgroundReplacer({
                 <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
-                <p className="text-gray-500 text-sm">上传图片并输入背景描述</p>
+                <p className="text-gray-500 text-sm">
+                  {mode === 'text' && '输入背景描述后点击按钮生成'}
+                  {mode === 'image' && '上传背景图片后点击按钮生成'}
+                  {mode === 'hybrid' && '输入描述并上传背景图片后点击按钮生成'}
+                </p>
               </div>
             </div>
           )}

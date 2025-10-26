@@ -143,7 +143,7 @@ function App() {
 
         {/* 主内容区域 */}
         <main className="max-w-6xl mx-auto px-6 pb-8">
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-xl p-6">
+          <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-xl p-6">
             {activeTab === 'line-art' && (
               <LineArtGenerator 
                 imageState={sharedImage}
@@ -182,7 +182,7 @@ function App() {
         {/* 使用说明 */}
         <div className="relative">
           <section className="max-w-3xl mx-auto px-4 pb-8 mt-16">
-            <div className="bg-white/85 backdrop-blur-sm rounded-xl p-6 border border-amber-200/50 shadow-xl">
+            <div className="bg-white/90 backdrop-blur-md rounded-xl p-6 border border-amber-200/50 shadow-xl">
               <h2 className="text-xl font-bold bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent mb-4 text-center">如何使用</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">

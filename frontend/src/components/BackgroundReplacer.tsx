@@ -231,7 +231,7 @@ export default function BackgroundReplacer({
       {/* 左侧操作区 */}
       <div className="w-full xl:w-[400px] flex-shrink-0 space-y-4">
         {/* 模式选择区域 */}
-        <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+        <div>
           <label className="section-title-decorated text-xs mb-3 block">选择模式</label>
           <div className="text-xs text-gray-600 mb-3">场景融合：让图片与新场景完美融合</div>
           <div className="grid grid-cols-3 gap-2">
@@ -275,7 +275,7 @@ export default function BackgroundReplacer({
         </div>
 
         {/* 主体图片上传 */}
-        <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+        <div>
           <label className="section-title-decorated text-xs mb-3">主体图片</label>
           <ImageUpload 
             onImageSelect={handleImageSelect}
@@ -289,7 +289,7 @@ export default function BackgroundReplacer({
           <>
             {/* 背景图片（图片模式/混合模式） */}
             {(mode === 'image' || mode === 'hybrid') && (
-              <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+              <div>
                 <label className="section-title-decorated text-xs mb-3">背景图片</label>
                 <ImageUpload 
                   onImageSelect={handleBackgroundSelect}
@@ -302,7 +302,7 @@ export default function BackgroundReplacer({
 
             {/* 文本描述（文字模式/混合模式） */}
             {(mode === 'text' || mode === 'hybrid') && (
-              <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+              <div>
                 <label className="section-title-decorated text-xs mb-3">
                   {mode === 'hybrid' ? '修改描述' : '背景描述'}
                 </label>
@@ -356,7 +356,7 @@ export default function BackgroundReplacer({
 
       {/* 右侧结果区 */}
       <div className="w-full xl:w-[400px] flex-shrink-0">
-        <div className="aspect-square w-full p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+        <div className="aspect-square w-full">
           <h2 className="section-title-decorated text-sm mb-3">生成结果</h2>
           <div className="h-[calc(100%-2rem)]">
             {isGenerating ? (

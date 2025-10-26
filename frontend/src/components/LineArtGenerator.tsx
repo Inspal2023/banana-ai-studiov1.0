@@ -138,7 +138,7 @@ export default function LineArtGenerator({
       {/* 左侧操作区 */}
       <div className="w-full lg:w-[320px] flex-shrink-0 space-y-4">
         {/* 上传图片区域 */}
-        <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+        <div>
           <h2 className="section-title-decorated text-sm mb-3">上传图片</h2>
           <ImageUpload 
             onImageSelect={handleImageSelect}
@@ -149,7 +149,7 @@ export default function LineArtGenerator({
 
         {/* 线稿类型选择 */}
         {imageState.previewUrl && (
-          <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+          <div>
             <label className="section-title-decorated text-xs mb-3 block">选择线稿类型</label>
             <div className="flex gap-2">
               <button
@@ -197,7 +197,7 @@ export default function LineArtGenerator({
 
       {/* 右侧结果区 */}
       <div className="w-full lg:w-[320px] flex-shrink-0">
-        <div className="aspect-square w-full p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+        <div className="aspect-square w-full">
           <h2 className="section-title-decorated text-sm mb-3">生成结果</h2>
           <div className="h-[calc(100%-2rem)]">
             {isGenerating ? (

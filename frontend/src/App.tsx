@@ -181,25 +181,84 @@ function App() {
 
         {/* 使用说明 */}
         <div className="relative">
-          <section className="max-w-3xl mx-auto px-4 pb-8 mt-16">
-            <div className="bg-white/90 backdrop-blur-md rounded-xl p-6 border border-amber-200/50 shadow-xl">
-              <h2 className="text-xl font-bold bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent mb-4 text-center">如何使用</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold shadow-lg">1</div>
-                  <h3 className="font-semibold text-amber-800 mb-2">上传照片</h3>
-                  <p className="text-sm text-amber-700">选择一张清晰的图片，支持JPG、PNG、WEBP格式</p>
+          <section className="max-w-4xl mx-auto px-4 pb-8 mt-16">
+            <div className="bg-white/95 backdrop-blur-md rounded-xl p-8 border border-amber-200/60 shadow-2xl">
+              <h2 className="text-2xl font-bold text-amber-800 mb-8 text-center tracking-wide">如何使用</h2>
+              
+              {/* 主要流程布局 */}
+              <div className="flex items-center justify-between mb-8 space-x-4">
+                {/* 第一步：上传照片 */}
+                <div className="flex-1">
+                  <div className="text-center">
+                    <div className="bg-gradient-to-br from-amber-500 to-orange-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
+                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-amber-800 mb-3">上传照片</h3>
+                    <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-4 border-2 border-dashed border-amber-300/60">
+                      <p className="text-amber-700 text-sm font-medium">选择或拖拽图片</p>
+                      <p className="text-xs text-amber-600 mt-1">支持 JPG, PNG, WEBP 格式</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <div className="bg-gradient-to-r from-yellow-500 to-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold shadow-lg">2</div>
-                  <h3 className="font-semibold text-amber-800 mb-2">AI处理</h3>
-                  <p className="text-sm text-amber-700">选择功能后，AI会分析您的图片并进行相应的处理</p>
+
+                {/* 箭头指示 */}
+                <div className="flex-shrink-0">
+                  <div className="bg-gradient-to-r from-amber-400 to-orange-400 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold shadow-lg">3</div>
-                  <h3 className="font-semibold text-amber-800 mb-2">获得结果</h3>
-                  <p className="text-sm text-amber-700">几秒钟后，您将获得处理后的创意图片结果</p>
+
+                {/* 第二步：选择功能 */}
+                <div className="flex-1">
+                  <div className="text-center">
+                    <div className="bg-gradient-to-br from-purple-500 to-pink-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
+                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-amber-800 mb-3">选择功能</h3>
+                    <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-4 border-2 border-dashed border-purple-300/60">
+                      <p className="text-purple-700 text-sm font-medium">线稿图 / 三视图 / 场景融合</p>
+                      <p className="text-xs text-purple-600 mt-1">点击功能按钮开始生成</p>
+                    </div>
+                  </div>
                 </div>
+
+                {/* 箭头指示 */}
+                <div className="flex-shrink-0">
+                  <div className="bg-gradient-to-r from-amber-400 to-orange-400 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* 第三步：获得结果 */}
+                <div className="flex-1">
+                  <div className="text-center">
+                    <div className="bg-gradient-to-br from-green-500 to-emerald-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
+                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-amber-800 mb-3">获得结果</h3>
+                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border-2 border-dashed border-green-300/60">
+                      <p className="text-green-700 text-sm font-medium">等待AI处理完成</p>
+                      <p className="text-xs text-green-600 mt-1">下载高质量处理结果</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 底部提示 */}
+              <div className="text-center bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 border border-amber-200/40">
+                <p className="text-sm text-amber-700 font-medium">
+                  💡 <strong>小贴士：</strong>上传清晰的图片可获得更好的处理效果
+                </p>
               </div>
             </div>
           </section>

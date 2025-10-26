@@ -184,28 +184,30 @@ function App() {
         </main>
 
         {/* 使用说明 */}
-        <section className="max-w-4xl mx-auto px-4 pb-8">
-          <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4">
-            <h2 className="text-lg font-bold text-amber-800 mb-3 text-center">如何使用</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center">
-                <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">1</div>
-                <h3 className="font-semibold text-amber-800 mb-1">上传照片</h3>
-                <p className="text-xs text-amber-700">选择一张清晰的图片，支持JPG、PNG、WEBP格式</p>
-              </div>
-              <div className="text-center">
-                <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">2</div>
-                <h3 className="font-semibold text-amber-800 mb-1">AI处理</h3>
-                <p className="text-xs text-amber-700">选择功能后，AI会分析您的图片并进行相应的处理</p>
-              </div>
-              <div className="text-center">
-                <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">3</div>
-                <h3 className="font-semibold text-amber-800 mb-1">获得结果</h3>
-                <p className="text-xs text-amber-700">几秒钟后，您将获得处理后的创意图片结果</p>
+        <div className="relative">
+          <section className="max-w-4xl mx-auto px-4 pb-8 mt-8">
+            <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4">
+              <h2 className="text-lg font-bold text-amber-800 mb-3 text-center">如何使用</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="text-center">
+                  <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">1</div>
+                  <h3 className="font-semibold text-amber-800 mb-1">上传照片</h3>
+                  <p className="text-xs text-amber-700">选择一张清晰的图片，支持JPG、PNG、WEBP格式</p>
+                </div>
+                <div className="text-center">
+                  <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">2</div>
+                  <h3 className="font-semibold text-amber-800 mb-1">AI处理</h3>
+                  <p className="text-xs text-amber-700">选择功能后，AI会分析您的图片并进行相应的处理</p>
+                </div>
+                <div className="text-center">
+                  <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">3</div>
+                  <h3 className="font-semibold text-amber-800 mb-1">获得结果</h3>
+                  <p className="text-xs text-amber-700">几秒钟后，您将获得处理后的创意图片结果</p>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
 
         {/* 版权信息 */}
         <footer className="text-center py-4">

@@ -59,7 +59,11 @@ export default function ImageUpload({
       {previewUrl ? (
         // 已上传图片，显示预览和上传图标
         <div className="relative border-2 border-neutral-300 rounded-md overflow-hidden group">
-          <img src={previewUrl} alt="Preview" className="w-full h-auto" />
+          <img 
+            src={previewUrl} 
+            alt="Preview" 
+            className="w-full h-64 object-cover object-center" 
+          />
           
           {/* 图标覆盖层：重新上传 + 删除 */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-normal flex items-center justify-center gap-md">

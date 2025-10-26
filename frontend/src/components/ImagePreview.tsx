@@ -75,7 +75,7 @@ export default function ImagePreview({ imageUrl, onDownload, onZoom }: ImagePrev
         <img 
           src={imageUrl} 
           alt="Generated" 
-          className="w-full h-auto rounded-md border-2 border-neutral-300"
+          className="w-full h-64 object-contain rounded-md border-2 border-neutral-300"
           referrerPolicy="no-referrer"
           crossOrigin="anonymous"
         />

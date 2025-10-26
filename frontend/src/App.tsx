@@ -70,11 +70,11 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden">
 
       {/* 主内容区域 */}
       <div className="relative z-10">
-        {/* 标题区域 - 参考Pet Selfie Generator的简洁风格 */}
+        {/* 标题区域 - 暖黄渐变风格 */}
         <header className="text-center py-8">
           <div className="flex items-center justify-center mb-4">
             <img 
@@ -82,14 +82,16 @@ function App() {
               alt="香蕉小超人" 
               className="w-14 h-14 object-contain mr-3"
             />
-            <h1 className="text-3xl font-bold text-slate-800">香蕉AI工作室</h1>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-amber-700 via-orange-600 to-yellow-600 bg-clip-text text-transparent">
+              香蕉AI工作室
+            </h1>
           </div>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto px-4">
+          <p className="text-lg text-amber-800 max-w-2xl mx-auto px-4 font-medium">
             上传您的图片，体验AI驱动的强大图像处理技术
           </p>
         </header>
 
-        {/* 功能选择区域 - 简化设计 */}
+        {/* 功能选择区域 - 暖黄渐变风格 */}
         <section className="max-w-3xl mx-auto px-4 mb-8">
           <div className="flex justify-center gap-4">
             {/* 线稿图按钮 */}
@@ -97,12 +99,12 @@ function App() {
               onClick={handleLineArtClick}
               className={`px-6 py-3 rounded-xl border-2 transition-all duration-300 font-medium ${
                 activeTab === 'line-art' 
-                  ? 'bg-amber-500 text-white border-amber-500 shadow-lg scale-105' 
-                  : 'bg-white text-slate-600 border-slate-200 hover:border-amber-300 hover:text-amber-600'
+                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white border-amber-500 shadow-lg scale-105' 
+                  : 'bg-white/90 backdrop-blur-sm text-amber-700 border-amber-300 hover:border-amber-400 hover:text-amber-800 hover:shadow-md'
               }`}
             >
               <div className="flex items-center gap-2">
-                <Pen className={`w-5 h-5 ${activeTab === 'line-art' ? 'text-white' : 'text-current'}`} />
+                <Pen className={`w-5 h-5 ${activeTab === 'line-art' ? 'text-white' : 'text-amber-600'}`} />
                 <span>线稿图</span>
               </div>
             </button>
@@ -112,12 +114,12 @@ function App() {
               onClick={handleMultiViewClick}
               className={`px-6 py-3 rounded-xl border-2 transition-all duration-300 font-medium ${
                 activeTab === 'multi-view' 
-                  ? 'bg-purple-500 text-white border-purple-500 shadow-lg scale-105' 
-                  : 'bg-white text-slate-600 border-slate-200 hover:border-purple-300 hover:text-purple-600'
+                  ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white border-yellow-500 shadow-lg scale-105' 
+                  : 'bg-white/90 backdrop-blur-sm text-yellow-700 border-yellow-300 hover:border-yellow-400 hover:text-yellow-800 hover:shadow-md'
               }`}
             >
               <div className="flex items-center gap-2">
-                <Box className={`w-5 h-5 ${activeTab === 'multi-view' ? 'text-white' : 'text-current'}`} />
+                <Box className={`w-5 h-5 ${activeTab === 'multi-view' ? 'text-white' : 'text-yellow-600'}`} />
                 <span>三视图</span>
               </div>
             </button>
@@ -127,12 +129,12 @@ function App() {
               onClick={handleBackgroundClick}
               className={`px-6 py-3 rounded-xl border-2 transition-all duration-300 font-medium ${
                 activeTab === 'background' 
-                  ? 'bg-green-500 text-white border-green-500 shadow-lg scale-105' 
-                  : 'bg-white text-slate-600 border-slate-200 hover:border-green-300 hover:text-green-600'
+                  ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white border-orange-500 shadow-lg scale-105' 
+                  : 'bg-white/90 backdrop-blur-sm text-orange-700 border-orange-300 hover:border-orange-400 hover:text-orange-800 hover:shadow-md'
               }`}
             >
               <div className="flex items-center gap-2">
-                <ImageIcon className={`w-5 h-5 ${activeTab === 'background' ? 'text-white' : 'text-current'}`} />
+                <ImageIcon className={`w-5 h-5 ${activeTab === 'background' ? 'text-white' : 'text-orange-600'}`} />
                 <span>场景融合</span>
               </div>
             </button>
@@ -180,23 +182,23 @@ function App() {
         {/* 使用说明 */}
         <div className="relative">
           <section className="max-w-3xl mx-auto px-4 pb-8 mt-16">
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-slate-200">
-              <h2 className="text-xl font-bold text-slate-800 mb-4 text-center">如何使用</h2>
+            <div className="bg-white/85 backdrop-blur-sm rounded-xl p-6 border border-amber-200/50 shadow-xl">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent mb-4 text-center">如何使用</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
-                  <div className="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold">1</div>
-                  <h3 className="font-semibold text-slate-800 mb-2">上传照片</h3>
-                  <p className="text-sm text-slate-600">选择一张清晰的图片，支持JPG、PNG、WEBP格式</p>
+                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold shadow-lg">1</div>
+                  <h3 className="font-semibold text-amber-800 mb-2">上传照片</h3>
+                  <p className="text-sm text-amber-700">选择一张清晰的图片，支持JPG、PNG、WEBP格式</p>
                 </div>
                 <div className="text-center">
-                  <div className="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold">2</div>
-                  <h3 className="font-semibold text-slate-800 mb-2">AI处理</h3>
-                  <p className="text-sm text-slate-600">选择功能后，AI会分析您的图片并进行相应的处理</p>
+                  <div className="bg-gradient-to-r from-yellow-500 to-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold shadow-lg">2</div>
+                  <h3 className="font-semibold text-amber-800 mb-2">AI处理</h3>
+                  <p className="text-sm text-amber-700">选择功能后，AI会分析您的图片并进行相应的处理</p>
                 </div>
                 <div className="text-center">
-                  <div className="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold">3</div>
-                  <h3 className="font-semibold text-slate-800 mb-2">获得结果</h3>
-                  <p className="text-sm text-slate-600">几秒钟后，您将获得处理后的创意图片结果</p>
+                  <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold shadow-lg">3</div>
+                  <h3 className="font-semibold text-amber-800 mb-2">获得结果</h3>
+                  <p className="text-sm text-amber-700">几秒钟后，您将获得处理后的创意图片结果</p>
                 </div>
               </div>
             </div>
@@ -205,7 +207,7 @@ function App() {
 
         {/* 版权信息 */}
         <footer className="text-center py-6">
-          <p className="text-sm text-slate-500">Created by 香蕉AI工作室</p>
+          <p className="text-sm text-amber-600 font-medium">Created by 香蕉AI工作室</p>
         </footer>
       </div>
     </div>

@@ -70,77 +70,71 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-yellow-100 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 relative overflow-hidden">
 
       {/* 主内容区域 */}
       <div className="relative z-10">
-        {/* 标题区域 */}
-        <header className="text-center py-6">
-          <div className="flex items-center justify-center mb-2">
+        {/* 标题区域 - 参考Pet Selfie Generator的简洁风格 */}
+        <header className="text-center py-8">
+          <div className="flex items-center justify-center mb-4">
             <img 
               src="/banana-superhero-logo-transparent.png" 
               alt="香蕉小超人" 
-              className="w-16 h-16 object-contain mr-3"
+              className="w-14 h-14 object-contain mr-3"
             />
-            <h1 className="text-3xl font-bold text-amber-800">香蕉AI工作室</h1>
+            <h1 className="text-3xl font-bold text-slate-800">香蕉AI工作室</h1>
           </div>
-          <p className="text-sm text-amber-700 max-w-2xl mx-auto px-4">
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto px-4">
             上传您的图片，体验AI驱动的强大图像处理技术
           </p>
         </header>
 
-        {/* 功能选择区域 */}
-        <section className="max-w-4xl mx-auto px-4 mb-6">
-          <div className="flex justify-center gap-6">
+        {/* 功能选择区域 - 简化设计 */}
+        <section className="max-w-3xl mx-auto px-4 mb-8">
+          <div className="flex justify-center gap-4">
             {/* 线稿图按钮 */}
             <button
               onClick={handleLineArtClick}
-              className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all duration-300 ${
+              className={`px-6 py-3 rounded-xl border-2 transition-all duration-300 font-medium ${
                 activeTab === 'line-art' 
-                  ? 'bg-amber-100 border-amber-300 shadow-lg' 
-                  : 'bg-white border-gray-200 hover:shadow-md'
+                  ? 'bg-amber-500 text-white border-amber-500 shadow-lg scale-105' 
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-amber-300 hover:text-amber-600'
               }`}
             >
-              <Pen className={`w-6 h-6 mb-1 ${activeTab === 'line-art' ? 'text-amber-600' : 'text-gray-600'}`} />
-              <span className={`text-xs font-medium ${
-                activeTab === 'line-art' ? 'text-amber-600' : 'text-gray-700'
-              }`}>
-                线稿图
-              </span>
+              <div className="flex items-center gap-2">
+                <Pen className={`w-5 h-5 ${activeTab === 'line-art' ? 'text-white' : 'text-current'}`} />
+                <span>线稿图</span>
+              </div>
             </button>
 
             {/* 三视图按钮 */}
             <button
               onClick={handleMultiViewClick}
-              className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all duration-300 ${
+              className={`px-6 py-3 rounded-xl border-2 transition-all duration-300 font-medium ${
                 activeTab === 'multi-view' 
-                  ? 'bg-purple-100 border-purple-300 shadow-lg' 
-                  : 'bg-white border-gray-200 hover:shadow-md'
+                  ? 'bg-purple-500 text-white border-purple-500 shadow-lg scale-105' 
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-purple-300 hover:text-purple-600'
               }`}
             >
-              <Box className={`w-6 h-6 mb-1 ${activeTab === 'multi-view' ? 'text-purple-600' : 'text-gray-600'}`} />
-              <span className={`text-xs font-medium ${
-                activeTab === 'multi-view' ? 'text-purple-600' : 'text-gray-700'
-              }`}>
-                三视图
-              </span>
+              <div className="flex items-center gap-2">
+                <Box className={`w-5 h-5 ${activeTab === 'multi-view' ? 'text-white' : 'text-current'}`} />
+                <span>三视图</span>
+              </div>
             </button>
 
             {/* 场景融合按钮 */}
             <button
               onClick={handleBackgroundClick}
-              className={`flex flex-col items-center p-3 rounded-lg border-2 transition-all duration-300 ${
+              className={`px-6 py-3 rounded-xl border-2 transition-all duration-300 font-medium ${
                 activeTab === 'background' 
-                  ? 'bg-green-100 border-green-300 shadow-lg' 
-                  : 'bg-white border-gray-200 hover:shadow-md'
+                  ? 'bg-green-500 text-white border-green-500 shadow-lg scale-105' 
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-green-300 hover:text-green-600'
               }`}
             >
-              <ImageIcon className={`w-6 h-6 mb-1 ${activeTab === 'background' ? 'text-green-600' : 'text-gray-600'}`} />
-              <span className={`text-xs font-medium ${
-                activeTab === 'background' ? 'text-green-600' : 'text-gray-700'
-              }`}>
-                场景融合
-              </span>
+              <div className="flex items-center gap-2">
+                <ImageIcon className={`w-5 h-5 ${activeTab === 'background' ? 'text-white' : 'text-current'}`} />
+                <span>场景融合</span>
+              </div>
             </button>
           </div>
         </section>
@@ -185,24 +179,24 @@ function App() {
 
         {/* 使用说明 */}
         <div className="relative">
-          <section className="max-w-4xl mx-auto px-4 pb-8 mt-16">
-            <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4">
-              <h2 className="text-lg font-bold text-amber-800 mb-3 text-center">如何使用</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <section className="max-w-3xl mx-auto px-4 pb-8 mt-16">
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-slate-200">
+              <h2 className="text-xl font-bold text-slate-800 mb-4 text-center">如何使用</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
-                  <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">1</div>
-                  <h3 className="font-semibold text-amber-800 mb-1">上传照片</h3>
-                  <p className="text-xs text-amber-700">选择一张清晰的图片，支持JPG、PNG、WEBP格式</p>
+                  <div className="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold">1</div>
+                  <h3 className="font-semibold text-slate-800 mb-2">上传照片</h3>
+                  <p className="text-sm text-slate-600">选择一张清晰的图片，支持JPG、PNG、WEBP格式</p>
                 </div>
                 <div className="text-center">
-                  <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">2</div>
-                  <h3 className="font-semibold text-amber-800 mb-1">AI处理</h3>
-                  <p className="text-xs text-amber-700">选择功能后，AI会分析您的图片并进行相应的处理</p>
+                  <div className="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold">2</div>
+                  <h3 className="font-semibold text-slate-800 mb-2">AI处理</h3>
+                  <p className="text-sm text-slate-600">选择功能后，AI会分析您的图片并进行相应的处理</p>
                 </div>
                 <div className="text-center">
-                  <div className="bg-amber-500 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold">3</div>
-                  <h3 className="font-semibold text-amber-800 mb-1">获得结果</h3>
-                  <p className="text-xs text-amber-700">几秒钟后，您将获得处理后的创意图片结果</p>
+                  <div className="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold">3</div>
+                  <h3 className="font-semibold text-slate-800 mb-2">获得结果</h3>
+                  <p className="text-sm text-slate-600">几秒钟后，您将获得处理后的创意图片结果</p>
                 </div>
               </div>
             </div>
@@ -210,8 +204,8 @@ function App() {
         </div>
 
         {/* 版权信息 */}
-        <footer className="text-center py-4">
-          <p className="text-sm text-amber-600">Created by 香蕉AI工作室</p>
+        <footer className="text-center py-6">
+          <p className="text-sm text-slate-500">Created by 香蕉AI工作室</p>
         </footer>
       </div>
     </div>

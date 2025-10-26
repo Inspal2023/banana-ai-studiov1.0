@@ -227,17 +227,19 @@ export default function BackgroundReplacer({
   }
 
   return (
-    <div className="flex gap-16 max-w-6xl mx-auto">
+    <div className="flex flex-col xl:flex-row gap-8 xl:gap-16 max-w-7xl mx-auto items-start">
       {/* 左侧操作区 */}
-      <div className="w-[300px] h-[300px] space-y-3">
+      <div className="w-full xl:w-[400px] flex-shrink-0 space-y-4">
         {/* 模式选择区域 */}
-        <div className="p-3 border border-gray-200 bg-white/80 rounded-lg">
-          <label className="section-title-decorated text-xs mb-2 block">选择模式</label>
-          <div className="text-xs text-gray-600 mb-2">场景融合：让图片与新场景完美融合</div>
-          <div className="grid grid-cols-3 gap-1">
+        <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+          <label className="section-title-decorated text-xs mb-3 block">选择模式</label>
+          <div className="text-xs text-gray-600 mb-3">场景融合：让图片与新场景完美融合</div>
+          <div className="grid grid-cols-3 gap-2">
             <button
               onClick={() => setMode('text')}
-              className={`option-button text-xs py-2 ${mode === 'text' ? 'option-selected' : 'option-unselected'}`}
+              className={`option-button text-xs py-2 px-2 ${
+                mode === 'text' ? 'option-selected' : 'option-unselected'
+              }`}
               title="通过文字描述来修改主图图片背景/场景"
             >
               <span className="flex items-center justify-center gap-1">
@@ -247,7 +249,9 @@ export default function BackgroundReplacer({
             </button>
             <button
               onClick={() => setMode('image')}
-              className={`option-button text-xs py-2 ${mode === 'image' ? 'option-selected' : 'option-unselected'}`}
+              className={`option-button text-xs py-2 px-2 ${
+                mode === 'image' ? 'option-selected' : 'option-unselected'
+              }`}
               title="通过上传另外的图片来修改主图背景/场景"
             >
               <span className="flex items-center justify-center gap-1">
@@ -257,7 +261,9 @@ export default function BackgroundReplacer({
             </button>
             <button
               onClick={() => setMode('hybrid')}
-              className={`option-button text-xs py-2 ${mode === 'hybrid' ? 'option-selected' : 'option-unselected'}`}
+              className={`option-button text-xs py-2 px-2 ${
+                mode === 'hybrid' ? 'option-selected' : 'option-unselected'
+              }`}
               title="通过文字描述和另外的图片来修改主图背景/场景"
             >
               <span className="flex items-center justify-center gap-1">
@@ -269,8 +275,8 @@ export default function BackgroundReplacer({
         </div>
 
         {/* 主体图片上传 */}
-        <div className="p-3 border border-gray-200 bg-white/80 rounded-lg">
-          <label className="section-title-decorated text-xs mb-2">主体图片</label>
+        <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+          <label className="section-title-decorated text-xs mb-3">主体图片</label>
           <ImageUpload 
             onImageSelect={handleImageSelect}
             onImageRemove={handleImageRemove}
@@ -283,8 +289,8 @@ export default function BackgroundReplacer({
           <>
             {/* 背景图片（图片模式/混合模式） */}
             {(mode === 'image' || mode === 'hybrid') && (
-              <div className="p-3 border border-gray-200 bg-white/80 rounded-lg">
-                <label className="section-title-decorated text-xs mb-2">背景图片</label>
+              <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+                <label className="section-title-decorated text-xs mb-3">背景图片</label>
                 <ImageUpload 
                   onImageSelect={handleBackgroundSelect}
                   onImageRemove={handleBackgroundRemove}
@@ -296,8 +302,8 @@ export default function BackgroundReplacer({
 
             {/* 文本描述（文字模式/混合模式） */}
             {(mode === 'text' || mode === 'hybrid') && (
-              <div className="p-3 border border-gray-200 bg-white/80 rounded-lg">
-                <label className="section-title-decorated text-xs mb-2">
+              <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+                <label className="section-title-decorated text-xs mb-3">
                   {mode === 'hybrid' ? '修改描述' : '背景描述'}
                 </label>
                 <div className="relative">
@@ -305,12 +311,12 @@ export default function BackgroundReplacer({
                     value={textPrompt}
                     onChange={(e) => setTextPrompt(e.target.value)}
                     placeholder="例如：现代简约客厅，温暖的自然光线，木地板背景"
-                    className="input-elevated w-full h-16 px-3 py-2 pb-8 text-neutral-900 placeholder-neutral-600 resize-none text-xs"
+                    className="input-elevated w-full h-20 px-3 py-2 pb-10 text-neutral-900 placeholder-neutral-600 resize-none text-xs"
                   />
                   <button
                     onClick={handleOptimizePrompt}
                     disabled={optimizing || isGenerating || !textPrompt.trim()}
-                    className="absolute bottom-1 right-1 px-2 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1 text-xs hover:scale-105 shadow-md"
+                    className="absolute bottom-2 right-2 px-3 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1 text-xs hover:scale-105 shadow-md"
                   >
                     {optimizing ? (
                       <Loader2 className="w-3 h-3 animate-spin" />
@@ -349,23 +355,25 @@ export default function BackgroundReplacer({
       </div>
 
       {/* 右侧结果区 */}
-      <div className="w-[300px] h-[300px]">
-        <div className="p-3 border border-gray-200 bg-white/80 rounded-lg h-full">
+      <div className="w-full xl:w-[400px] flex-shrink-0">
+        <div className="aspect-square w-full p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
           <h2 className="section-title-decorated text-sm mb-3">生成结果</h2>
-          {isGenerating ? (
-            <div className="h-full bg-neutral-50 rounded-md flex flex-col items-center justify-center">
-              <div className="image-skeleton w-full h-[200px] rounded-md"></div>
-              <p className="mt-2 text-neutral-600 text-xs">AI正在融合您的图片场景，请稍候...</p>
-            </div>
-          ) : resultUrl ? (
-            <div className="result-fade-in h-full">
-              <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
-            </div>
-          ) : (
-            <div className="h-full bg-neutral-50 rounded-md flex items-center justify-center">
-              <p className="description-text-gradient text-neutral-600 text-xs text-center px-4">上传图片后点击"开始生成"，融合后的图片将显示在这里</p>
-            </div>
-          )}
+          <div className="h-[calc(100%-2rem)]">
+            {isGenerating ? (
+              <div className="h-full bg-neutral-50 rounded-md flex flex-col items-center justify-center">
+                <div className="image-skeleton w-full h-32 rounded-md"></div>
+                <p className="mt-3 text-neutral-600 text-xs text-center">AI正在融合您的图片场景，请稍候...</p>
+              </div>
+            ) : resultUrl ? (
+              <div className="result-fade-in h-full">
+                <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
+              </div>
+            ) : (
+              <div className="h-full bg-neutral-50 rounded-md flex items-center justify-center">
+                <p className="description-text-gradient text-neutral-600 text-xs text-center px-4">上传图片后点击"开始生成"，融合后的图片将显示在这里</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

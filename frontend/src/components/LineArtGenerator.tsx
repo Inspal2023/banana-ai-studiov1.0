@@ -134,12 +134,12 @@ export default function LineArtGenerator({
   }
 
   return (
-    <div className="flex gap-16 max-w-6xl mx-auto">
+    <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 max-w-6xl mx-auto items-start">
       {/* 左侧操作区 */}
-      <div className="w-[300px] h-[300px] space-y-4">
+      <div className="w-full lg:w-[320px] flex-shrink-0 space-y-4">
         {/* 上传图片区域 */}
-        <div className="p-3 border border-gray-200 bg-white/80 rounded-lg">
-          <h2 className="section-title-decorated text-sm mb-2">上传图片</h2>
+        <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+          <h2 className="section-title-decorated text-sm mb-3">上传图片</h2>
           <ImageUpload 
             onImageSelect={handleImageSelect}
             onImageRemove={handleImageRemove}
@@ -149,12 +149,12 @@ export default function LineArtGenerator({
 
         {/* 线稿类型选择 */}
         {imageState.previewUrl && (
-          <div className="p-3 border border-gray-200 bg-white/80 rounded-lg">
-            <label className="section-title-decorated text-xs mb-2 block">选择线稿类型</label>
-            <div className="flex gap-1">
+          <div className="p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
+            <label className="section-title-decorated text-xs mb-3 block">选择线稿类型</label>
+            <div className="flex gap-2">
               <button
                 onClick={() => setLineArtType('technical')}
-                className={`flex-1 option-button text-xs py-2 ${
+                className={`flex-1 option-button text-xs py-2 px-3 ${
                   lineArtType === 'technical' ? 'option-selected' : 'option-unselected'
                 }`}
               >
@@ -162,7 +162,7 @@ export default function LineArtGenerator({
               </button>
               <button
                 onClick={() => setLineArtType('concept')}
-                className={`flex-1 option-button text-xs py-2 ${
+                className={`flex-1 option-button text-xs py-2 px-3 ${
                   lineArtType === 'concept' ? 'option-selected' : 'option-unselected'
                 }`}
               >
@@ -196,23 +196,25 @@ export default function LineArtGenerator({
       </div>
 
       {/* 右侧结果区 */}
-      <div className="w-[300px] h-[300px]">
-        <div className="p-3 border border-gray-200 bg-white/80 rounded-lg h-full">
+      <div className="w-full lg:w-[320px] flex-shrink-0">
+        <div className="aspect-square w-full p-4 border border-gray-200 bg-white/80 rounded-lg shadow-sm">
           <h2 className="section-title-decorated text-sm mb-3">生成结果</h2>
-          {isGenerating ? (
-            <div className="h-full bg-neutral-50 rounded-md flex flex-col items-center justify-center">
-              <div className="image-skeleton w-full h-[200px] rounded-md"></div>
-              <p className="mt-2 text-neutral-600 text-xs">AI正在生成您的线稿图，请稍候...</p>
-            </div>
-          ) : resultUrl ? (
-            <div className="result-fade-in h-full">
-              <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
-            </div>
-          ) : (
-            <div className="h-full bg-neutral-50 rounded-md flex items-center justify-center">
-              <p className="description-text-gradient text-neutral-600 text-xs text-center px-4">上传图片后点击"开始生成"，线稿图将显示在这里</p>
-            </div>
-          )}
+          <div className="h-[calc(100%-2rem)]">
+            {isGenerating ? (
+              <div className="h-full bg-neutral-50 rounded-md flex flex-col items-center justify-center">
+                <div className="image-skeleton w-full h-32 rounded-md"></div>
+                <p className="mt-3 text-neutral-600 text-xs text-center">AI正在生成您的线稿图，请稍候...</p>
+              </div>
+            ) : resultUrl ? (
+              <div className="result-fade-in h-full">
+                <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
+              </div>
+            ) : (
+              <div className="h-full bg-neutral-50 rounded-md flex items-center justify-center">
+                <p className="description-text-gradient text-neutral-600 text-xs text-center px-4">上传图片后点击"开始生成"，线稿图将显示在这里</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

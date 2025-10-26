@@ -6,10 +6,37 @@
 
 @layer base {
   body {
-    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 25%, #F59E0B 50%, #D97706 75%, #92400E 100%);
+    /* 参考Pet Selfie Generator的柔和风格 - 浅蓝色到白色的渐变背景 */
+    background: linear-gradient(135deg, #E0F2FE 0%, #F0F9FF 25%, #FFFFFF 50%, #FFFFFF 75%, #F8FAFC 100%);
+    background-attachment: fixed;
     min-height: 100vh;
     font-family: 'SimHei', 'Microsoft YaHei', 'PingFang SC', 'Heiti SC', sans-serif;
     color: #18181B;
+    position: relative;
+  }
+
+  /* 香蕉小超人背景水印 */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/banana-superhero-watermark.jpg');
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: -1;
+    animation: bananaFloat 20s ease-in-out infinite;
+  }
+
+  @keyframes bananaFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(1deg); }
+    50% { transform: translateY(0px) rotate(0deg); }
+    75% { transform: translateY(10px) rotate(-1deg); }
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -31,9 +58,15 @@
     @apply bg-neutral-100 text-neutral-600 hover:bg-neutral-200;
   }
 
-  /* 卡片 */
+  /* 卡片 - 增强半透明效果以适配新背景 */
   .card {
-    @apply bg-white rounded-lg border-2 border-neutral-300 shadow-card p-xxl;
+    @apply bg-white/95 backdrop-blur-sm rounded-lg border-2 border-neutral-200 shadow-card p-xxl;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 
+      0 4px 16px rgba(59, 130, 246, 0.08),
+      0 2px 8px rgba(245, 158, 11, 0.06),
+      0 1px 4px rgba(0, 0, 0, 0.04);
+    border: 2px solid rgba(229, 231, 235, 0.8);
   }
 
   /* 主按钮 */
@@ -51,9 +84,10 @@
     @apply h-11 px-lg bg-secondary-500 text-white font-medium rounded-md transition-all duration-normal hover:bg-secondary-700;
   }
 
-  /* 上传区域 */
+  /* 上传区域 - 增强半透明效果 */
   .upload-area {
-    @apply w-full h-60 border-2 border-dashed border-neutral-300 rounded-xl bg-white flex flex-col items-center justify-center gap-md transition-all duration-normal cursor-pointer;
+    @apply w-full h-60 border-2 border-dashed border-neutral-300 rounded-xl bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center gap-md transition-all duration-normal cursor-pointer;
+    background-color: rgba(255, 255, 255, 0.9);
   }
 
   .upload-area:hover {

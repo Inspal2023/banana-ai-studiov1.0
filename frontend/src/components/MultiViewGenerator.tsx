@@ -128,66 +128,69 @@ export default function MultiViewGenerator({
   }
 
   return (
-    <div className="flex items-center justify-center gap-6 max-w-5xl mx-auto">
-      {/* 左侧上传区 */}
-      <div className="w-80 h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">上传图片</h2>
-        <ImageUpload 
-          onImageSelect={handleImageSelect}
-          onImageRemove={handleImageRemove}
-          previewUrl={imageState.previewUrl}
-        />
-      </div>
+    <div className="w-full max-w-6xl mx-auto overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+        {/* 左侧上传区 */}
+        <div className="w-full h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
+          <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">上传图片</h2>
+          <div className="h-64">
+            <ImageUpload 
+              onImageSelect={handleImageSelect}
+              onImageRemove={handleImageRemove}
+              previewUrl={imageState.previewUrl}
+            />
+          </div>
+        </div>
 
-      {/* 中间生成按钮 */}
-      <div className="flex flex-col items-center">
-        <button
-          onClick={handleGenerate}
-          disabled={!imageState.file || isGenerating}
-          className={`w-24 h-24 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg ${
-            !imageState.file 
-              ? 'opacity-50 cursor-not-allowed bg-gray-400' 
-              : isGenerating 
-                ? 'opacity-75 cursor-wait bg-purple-400'
-                : 'hover:shadow-xl hover:scale-110 bg-gradient-to-r from-purple-500 to-indigo-500 animate-star-rotate'
-          }`}
-        >
-          {isGenerating ? (
-            <Loader2 className="w-8 h-8 text-white animate-spin" />
-          ) : (
-            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-          )}
-        </button>
-      </div>
+        {/* 中间生成按钮 */}
+        <div className="flex flex-col items-center lg:order-first order-last">
+          <button
+            onClick={handleGenerate}
+            disabled={!imageState.file || isGenerating}
+            className={`w-24 h-24 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg ${
+              !imageState.file 
+                ? 'opacity-50 cursor-not-allowed bg-gray-400' 
+                : isGenerating 
+                  ? 'opacity-75 cursor-wait bg-purple-400'
+                  : 'hover:shadow-xl hover:scale-110 bg-gradient-to-r from-purple-500 to-indigo-500 animate-star-rotate'
+            }`}
+          >
+            {isGenerating ? (
+              <Loader2 className="w-8 h-8 text-white animate-spin" />
+            ) : (
+              <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            )}
+          </button>
+        </div>
 
-      {/* 右侧结果区 */}
-      <div className="w-80 h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">生成结果</h2>
-        <div className="h-64">
-          {isGenerating ? (
-            <div className="h-full bg-gray-50 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300">
-              <Loader2 className="w-8 h-8 text-purple-500 animate-spin mb-3" />
-              <p className="text-gray-600 text-sm text-center">AI正在生成您的三视图，请稍候...</p>
-            </div>
-          ) : resultUrl ? (
-            <div className="result-fade-in h-full">
-              <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
-            </div>
-          ) : (
-            <div className="h-full bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
-              <div className="text-center">
-                <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-                <p className="text-gray-500 text-sm">上传图片后点击中间按钮生成三视图</p>
+        {/* 右侧结果区 */}
+        <div className="w-full h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
+          <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">生成结果</h2>
+          <div className="h-64">
+            {isGenerating ? (
+              <div className="h-full bg-gray-50 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300">
+                <Loader2 className="w-8 h-8 text-purple-500 animate-spin mb-3" />
+                <p className="text-gray-600 text-sm text-center">AI正在生成您的三视图，请稍候...</p>
               </div>
-            </div>
-          )}
+            ) : resultUrl ? (
+              <div className="result-fade-in h-full">
+                <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
+              </div>
+            ) : (
+              <div className="h-full bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
+                <div className="text-center">
+                  <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                  <p className="text-gray-500 text-sm">上传图片后点击中间按钮生成三视图</p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-
       {error && (
         <div className="fixed bottom-4 left-4 right-4 p-2 bg-semantic-error/10 border border-semantic-error rounded-md text-semantic-error text-xs z-50">
           {error}

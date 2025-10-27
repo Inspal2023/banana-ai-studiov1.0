@@ -98,52 +98,64 @@ export default function ImagePreview({ imageUrl, onDownload, onZoom }: ImagePrev
         </div>
       </div>
 
-      {/* 玻璃质感半透明大窗口 - 完美预览 */}
+      {/* 全屏玻璃质感预览窗口 */}
       {isZoomed && (
         <>
-          {/* 背景遮罩层 */}
+          {/* 全屏背景遮罩层 */}
           <div 
-            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-all duration-300"
+            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-md transition-all duration-300"
             onClick={() => setIsZoomed(false)}
           />
           
-          {/* 主模态窗口 */}
+          {/* 全屏主窗口 */}
           <div 
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in-0 zoom-in-95 duration-300"
+            className="fixed inset-0 z-50 animate-in fade-in-0 duration-300"
             onClick={() => setIsZoomed(false)}
           >
-            {/* 玻璃质感容器 */}
+            {/* 全屏玻璃容器 */}
             <div 
-              className="relative bg-white/80 backdrop-blur-3xl rounded-3xl shadow-2xl border border-white/40 overflow-hidden max-w-[92vw] max-h-[92vh] min-w-[300px] transform transition-all duration-300 hover:shadow-3xl"
+              className="relative w-full h-full bg-white/70 backdrop-blur-2xl border-0 overflow-hidden flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* 顶部关闭按钮区域 */}
-              <div className="absolute top-6 right-6 z-20 flex gap-2">
+              {/* 顶部工具栏 */}
+              <div className="absolute top-8 right-8 z-20 flex gap-4">
                 <button
-                  className="text-gray-600 hover:text-white text-2xl w-12 h-12 flex items-center justify-center bg-white/30 hover:bg-black/50 rounded-full transition-all duration-300 backdrop-blur-xl border border-white/30 hover:border-white/60 shadow-lg hover:shadow-xl hover:scale-105"
+                  className="text-white hover:text-gray-200 text-xl w-14 h-14 flex items-center justify-center bg-white/20 hover:bg-black/40 rounded-2xl transition-all duration-300 backdrop-blur-xl border border-white/30 hover:border-white/50 shadow-lg hover:shadow-xl hover:scale-105"
                   onClick={() => setIsZoomed(false)}
-                  title="关闭预览"
+                  title="关闭预览 (Esc)"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
               
-              {/* 图片展示区域 */}
-              <div className="flex items-center justify-center p-10 min-h-[400px] bg-gradient-to-br from-white/10 to-white/5">
-                <img 
-                  src={imageUrl} 
-                  alt="高清预览" 
-                  className="max-w-full max-h-[calc(92vh-6rem)] object-contain rounded-2xl shadow-2xl ring-1 ring-white/20 hover:shadow-3xl transition-all duration-300"
-                  referrerPolicy="no-referrer"
-                  crossOrigin="anonymous"
-                  onClick={(e) => e.stopPropagation()}
-                />
+              {/* 主图片展示区域 */}
+              <div className="flex-1 flex items-center justify-center p-8 md:p-16 lg:p-24">
+                <div className="relative max-w-full max-h-full">
+                  <img 
+                    src={imageUrl} 
+                    alt="全屏高清预览" 
+                    className="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl ring-1 ring-white/30 hover:shadow-3xl transition-all duration-300 cursor-zoom-out"
+                    referrerPolicy="no-referrer"
+                    crossOrigin="anonymous"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
               </div>
               
-              {/* 底部装饰条 */}
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+              {/* 底部信息栏 */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/30 via-black/10 to-transparent">
+                <div className="flex items-center justify-center">
+                  <div className="text-white/80 text-sm font-medium px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20">
+                    点击图片或任意位置关闭 • 玻璃质感全屏预览
+                  </div>
+                </div>
+              </div>
+              
+              {/* 侧边装饰 */}
+              <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-white/40 via-white/20 to-white/40" />
+              <div className="absolute right-0 top-0 w-1 h-full bg-gradient-to-b from-white/40 via-white/20 to-white/40" />
             </div>
           </div>
         </>

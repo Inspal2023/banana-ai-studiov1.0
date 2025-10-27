@@ -98,67 +98,54 @@ export default function ImagePreview({ imageUrl, onDownload, onZoom }: ImagePrev
         </div>
       </div>
 
-      {/* 全屏玻璃质感预览窗口 */}
+      {/* 独立弹窗全屏玻璃质感预览窗口 */}
       {isZoomed && (
-        <>
-          {/* 全屏背景遮罩层 */}
-          <div 
-            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-md transition-all duration-300"
-            onClick={() => setIsZoomed(false)}
-          />
-          
-          {/* 全屏主窗口 */}
-          <div 
-            className="fixed inset-0 z-50 animate-in fade-in-0 duration-300"
-            onClick={() => setIsZoomed(false)}
-          >
-            {/* 全屏玻璃容器 */}
-            <div 
-              className="relative w-full h-full bg-white/70 backdrop-blur-2xl border-0 overflow-hidden flex flex-col"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* 顶部工具栏 */}
-              <div className="absolute top-8 right-8 z-20 flex gap-4">
-                <button
-                  className="text-white hover:text-gray-200 text-xl w-14 h-14 flex items-center justify-center bg-white/20 hover:bg-black/40 rounded-2xl transition-all duration-300 backdrop-blur-xl border border-white/30 hover:border-white/50 shadow-lg hover:shadow-xl hover:scale-105"
-                  onClick={() => setIsZoomed(false)}
-                  title="关闭预览 (Esc)"
-                >
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              
-              {/* 主图片展示区域 */}
-              <div className="flex-1 flex items-center justify-center p-8 md:p-16 lg:p-24">
-                <div className="relative max-w-full max-h-full">
-                  <img 
-                    src={imageUrl} 
-                    alt="全屏高清预览" 
-                    className="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl ring-1 ring-white/30 hover:shadow-3xl transition-all duration-300 cursor-zoom-out"
-                    referrerPolicy="no-referrer"
-                    crossOrigin="anonymous"
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                </div>
-              </div>
-              
-              {/* 底部信息栏 */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/30 via-black/10 to-transparent">
-                <div className="flex items-center justify-center">
-                  <div className="text-white/80 text-sm font-medium px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20">
-                    点击图片或任意位置关闭 • 玻璃质感全屏预览
-                  </div>
-                </div>
-              </div>
-              
-              {/* 侧边装饰 */}
-              <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-white/40 via-white/20 to-white/40" />
-              <div className="absolute right-0 top-0 w-1 h-full bg-gradient-to-b from-white/40 via-white/20 to-white/40" />
+        <div className="fixed inset-0 z-[9999] bg-black/50 backdrop-blur-2xl flex items-center justify-center animate-in fade-in-0 duration-300">
+          {/* 独立弹窗容器 */}
+          <div className="relative w-full h-full max-w-7xl max-h-[90vh] mx-4 bg-white/80 backdrop-blur-3xl rounded-3xl shadow-2xl border border-white/40 overflow-hidden flex flex-col">
+            
+            {/* 顶部关闭按钮 */}
+            <div className="absolute top-6 right-6 z-20">
+              <button
+                className="w-12 h-12 flex items-center justify-center bg-black/60 hover:bg-black/80 rounded-full transition-all duration-200 group backdrop-blur-sm border border-white/20"
+                onClick={() => setIsZoomed(false)}
+                title="关闭预览"
+              >
+                <svg className="w-6 h-6 text-white/90 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
             </div>
+            
+            {/* 主图片展示区域 */}
+            <div className="flex-1 flex items-center justify-center p-8 md:p-12 lg:p-16">
+              <div className="relative max-w-full max-h-full">
+                <img 
+                  src={imageUrl} 
+                  alt="独立预览窗口" 
+                  className="max-w-[85vw] max-h-[80vh] object-contain rounded-2xl shadow-2xl ring-1 ring-white/30"
+                  referrerPolicy="no-referrer"
+                  crossOrigin="anonymous"
+                />
+              </div>
+            </div>
+            
+            {/* 底部提示栏 */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
+              <div className="px-6 py-3 bg-black/60 backdrop-blur-md rounded-full border border-white/20">
+                <p className="text-white text-sm font-medium text-center">
+                  独立弹窗预览 • 点击关闭按钮或背景退出
+                </p>
+              </div>
+            </div>
+            
+            {/* 点击背景关闭 */}
+            <div 
+              className="absolute inset-0 -z-10 cursor-pointer" 
+              onClick={() => setIsZoomed(false)}
+            />
           </div>
-        </>
+        </div>
       )}
     </>
   )

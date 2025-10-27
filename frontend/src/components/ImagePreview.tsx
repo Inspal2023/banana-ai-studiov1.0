@@ -98,27 +98,35 @@ export default function ImagePreview({ imageUrl, onDownload, onZoom }: ImagePrev
         </div>
       </div>
 
-      {/* 放大预览模态框 */}
+      {/* 放大预览模态框 - 优化样式 */}
       {isZoomed && (
         <div 
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xl flex items-center justify-center p-4"
           onClick={() => setIsZoomed(false)}
         >
-          <img 
-            src={imageUrl} 
-            alt="放大预览" 
-            className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl"
-            referrerPolicy="no-referrer"
-            crossOrigin="anonymous"
-            onClick={(e) => e.stopPropagation()}
-          />
-          <button
-            className="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 w-12 h-12 flex items-center justify-center bg-black/50 hover:bg-black/70 rounded-full transition-all"
-            onClick={() => setIsZoomed(false)}
-            title="关闭预览"
-          >
-            ×
-          </button>
+          {/* 半透明磨砂玻璃模态框 */}
+          <div className="relative bg-white/90 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/30 overflow-hidden max-w-[90vw] max-h-[90vh]">
+            {/* 关闭按钮 */}
+            <button
+              className="absolute top-4 right-4 z-10 text-gray-600 hover:text-white text-2xl w-10 h-10 flex items-center justify-center bg-black/20 hover:bg-black/60 rounded-full transition-all duration-200"
+              onClick={() => setIsZoomed(false)}
+              title="关闭预览"
+            >
+              ×
+            </button>
+            
+            {/* 图片容器 */}
+            <div className="flex items-center justify-center p-8">
+              <img 
+                src={imageUrl} 
+                alt="放大预览" 
+                className="max-w-full max-h-[calc(90vh-4rem)] object-contain rounded-lg shadow-lg"
+                referrerPolicy="no-referrer"
+                crossOrigin="anonymous"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
+          </div>
         </div>
       )}
     </>

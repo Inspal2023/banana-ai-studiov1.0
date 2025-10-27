@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import ImageUpload from './ImageUpload'
-import ImagePreview from './ImagePreview'
+
 import { Loader2 } from 'lucide-react'
 
 interface ImageState {
@@ -160,6 +160,7 @@ export default function MultiViewGenerator({
                     alt="多视角预览" 
                     className="max-w-full max-h-full object-contain rounded-lg border border-gray-300 cursor-pointer"
                     onClick={() => {
+                      console.log('多视角预览图片被点击:', resultUrl)
                       window.dispatchEvent(new CustomEvent('showImagePreview', { 
                         detail: { imageUrl: resultUrl, title: '多视角预览' } 
                       }))

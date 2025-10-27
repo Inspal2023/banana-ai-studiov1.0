@@ -38,11 +38,13 @@ function App() {
   // 监听全局预览事件
   useEffect(() => {
     const handleShowPreview = (event: CustomEvent) => {
+      console.log('收到预览事件:', event.detail)
       setPreviewData(event.detail)
       setIsPreviewVisible(true)
     }
 
     window.addEventListener('showImagePreview', handleShowPreview as EventListener)
+    console.log('预览事件监听器已设置')
     
     return () => {
       window.removeEventListener('showImagePreview', handleShowPreview as EventListener)

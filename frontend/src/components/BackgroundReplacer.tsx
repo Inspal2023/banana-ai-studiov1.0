@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import ImageUpload from './ImageUpload'
-import ImagePreview from './ImagePreview'
+
 import { Loader2, Sparkles, MessageSquare, Image as ImageIcon, Layers } from 'lucide-react'
 
 type Mode = 'text' | 'image' | 'hybrid'
@@ -333,6 +333,7 @@ export default function BackgroundReplacer({
                     alt="场景融合预览" 
                     className="max-w-full max-h-full object-contain rounded-lg border border-gray-300 cursor-pointer"
                     onClick={() => {
+                      console.log('场景融合预览图片被点击:', resultUrl)
                       window.dispatchEvent(new CustomEvent('showImagePreview', { 
                         detail: { imageUrl: resultUrl, title: '场景融合预览' } 
                       }))

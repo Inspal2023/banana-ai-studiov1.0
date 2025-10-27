@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import ImageUpload from './ImageUpload'
-import ImagePreview from './ImagePreview'
+
 import { Loader2 } from 'lucide-react'
 
 interface ImageState {
@@ -195,6 +195,7 @@ export default function LineArtGenerator({
                     alt="线稿预览" 
                     className="max-w-full max-h-full object-contain rounded-lg border border-gray-300 cursor-pointer"
                     onClick={() => {
+                      console.log('线稿预览图片被点击:', resultUrl)
                       // 触发独立预览窗口
                       window.dispatchEvent(new CustomEvent('showImagePreview', { 
                         detail: { imageUrl: resultUrl, title: '线稿预览' } 

@@ -98,36 +98,55 @@ export default function ImagePreview({ imageUrl, onDownload, onZoom }: ImagePrev
         </div>
       </div>
 
-      {/* 放大预览模态框 - 优化样式 */}
+      {/* 玻璃质感半透明大窗口 - 完美预览 */}
       {isZoomed && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xl flex items-center justify-center p-4"
-          onClick={() => setIsZoomed(false)}
-        >
-          {/* 半透明磨砂玻璃模态框 */}
-          <div className="relative bg-white/90 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/30 overflow-hidden max-w-[90vw] max-h-[90vh]">
-            {/* 关闭按钮 */}
-            <button
-              className="absolute top-4 right-4 z-10 text-gray-600 hover:text-white text-2xl w-10 h-10 flex items-center justify-center bg-black/20 hover:bg-black/60 rounded-full transition-all duration-200"
-              onClick={() => setIsZoomed(false)}
-              title="关闭预览"
+        <>
+          {/* 背景遮罩层 */}
+          <div 
+            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-all duration-300"
+            onClick={() => setIsZoomed(false)}
+          />
+          
+          {/* 主模态窗口 */}
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in-0 zoom-in-95 duration-300"
+            onClick={() => setIsZoomed(false)}
+          >
+            {/* 玻璃质感容器 */}
+            <div 
+              className="relative bg-white/80 backdrop-blur-3xl rounded-3xl shadow-2xl border border-white/40 overflow-hidden max-w-[92vw] max-h-[92vh] min-w-[300px] transform transition-all duration-300 hover:shadow-3xl"
+              onClick={(e) => e.stopPropagation()}
             >
-              ×
-            </button>
-            
-            {/* 图片容器 */}
-            <div className="flex items-center justify-center p-8">
-              <img 
-                src={imageUrl} 
-                alt="放大预览" 
-                className="max-w-full max-h-[calc(90vh-4rem)] object-contain rounded-lg shadow-lg"
-                referrerPolicy="no-referrer"
-                crossOrigin="anonymous"
-                onClick={(e) => e.stopPropagation()}
-              />
+              {/* 顶部关闭按钮区域 */}
+              <div className="absolute top-6 right-6 z-20 flex gap-2">
+                <button
+                  className="text-gray-600 hover:text-white text-2xl w-12 h-12 flex items-center justify-center bg-white/30 hover:bg-black/50 rounded-full transition-all duration-300 backdrop-blur-xl border border-white/30 hover:border-white/60 shadow-lg hover:shadow-xl hover:scale-105"
+                  onClick={() => setIsZoomed(false)}
+                  title="关闭预览"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* 图片展示区域 */}
+              <div className="flex items-center justify-center p-10 min-h-[400px] bg-gradient-to-br from-white/10 to-white/5">
+                <img 
+                  src={imageUrl} 
+                  alt="高清预览" 
+                  className="max-w-full max-h-[calc(92vh-6rem)] object-contain rounded-2xl shadow-2xl ring-1 ring-white/20 hover:shadow-3xl transition-all duration-300"
+                  referrerPolicy="no-referrer"
+                  crossOrigin="anonymous"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </div>
+              
+              {/* 底部装饰条 */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   )

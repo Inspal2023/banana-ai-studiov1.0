@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react'
-import { Pen, Box, Image as ImageIcon } from 'lucide-react'
+import { useState, useCallback, useEffect } from 'react'
+import { Pen, Box, Image as ImageIcon, Download } from 'lucide-react'
 import LineArtGenerator from './components/LineArtGenerator'
 import MultiViewGenerator from './components/MultiViewGenerator'
 import BackgroundReplacer from './components/BackgroundReplacer'
@@ -10,6 +10,11 @@ type Tab = 'line-art' | 'multi-view' | 'background'
 interface ImageState {
   file: File | null
   previewUrl: string
+}
+
+interface PreviewData {
+  imageUrl: string
+  title: string
 }
 
 function App() {
@@ -25,6 +30,62 @@ function App() {
   const [lineArtResult, setLineArtResult] = useState<string>('')
   const [multiViewResult, setMultiViewResult] = useState<string>('')
   const [backgroundResult, setBackgroundResult] = useState<string>('')
+
+  // 全局独立预览窗口状态
+  const [previewData, setPreviewData] = useState<PreviewData | null>(null)
+  const [isPreviewVisible, setIsPreviewVisible] = useState(false)
+
+  // 监听全局预览事件
+  useEffect(() => {
+    const handleShowPreview = (event: CustomEvent) => {
+      setPreviewData(event.detail)
+      setIsPreviewVisible(true)
+    }
+
+    window.addEventListener('showImagePreview', handleShowPreview as EventListener)
+    
+    return () => {
+      window.removeEventListener('showImagePreview', handleShowPreview as EventListener)
+    }
+  }, [])
+
+  // 下载功能
+  const handleDownload = async (imageUrl: string, filename?: string) => {
+    try {
+      const response = await fetch(imageUrl, {
+        mode: 'cors',
+        credentials: 'omit'
+      })
+      
+      if (!response.ok) throw new Error('下载失败')
+      
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename || `banana-ai-${Date.now()}.png`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('下载错误:', error)
+      // 降级方案
+      const a = document.createElement('a')
+      a.href = imageUrl
+      a.download = filename || `banana-ai-${Date.now()}.png`
+      a.target = '_blank'
+      a.click()
+    }
+  }
+
+  // 关闭预览窗口
+  const closePreview = () => {
+    setIsPreviewVisible(false)
+    setPreviewData(null)
+  }
 
   const tabs = [
     {
@@ -269,6 +330,68 @@ function App() {
           <p className="text-sm text-amber-600 font-medium">Created by 香蕉AI工作室</p>
         </footer>
       </div>
+
+      {/* 全局独立预览窗口 */}
+      {isPreviewVisible && previewData && (
+        <div className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-xl flex items-center justify-center animate-in fade-in-0 duration-300">
+          {/* 独立弹窗容器 */}
+          <div className="relative w-full h-full max-w-7xl max-h-[90vh] mx-4 bg-white/90 backdrop-blur-3xl rounded-3xl shadow-2xl border border-white/60 overflow-hidden flex flex-col">
+            
+            {/* 顶部工具栏 */}
+            <div className="flex items-center justify-between p-6 bg-gradient-to-r from-white/30 to-white/10">
+              <h3 className="text-xl font-semibold text-gray-800">{previewData.title}</h3>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => handleDownload(previewData.imageUrl)}
+                  className="w-11 h-11 flex items-center justify-center bg-black/60 hover:bg-black/80 rounded-xl transition-all duration-200 group backdrop-blur-sm border border-white/20"
+                  title="下载图片"
+                >
+                  <Download className="w-5 h-5 text-white/90 group-hover:text-white transition-colors" />
+                </button>
+                <button
+                  onClick={closePreview}
+                  className="w-11 h-11 flex items-center justify-center bg-black/60 hover:bg-black/80 rounded-xl transition-all duration-200 group backdrop-blur-sm border border-white/20"
+                  title="关闭预览"
+                >
+                  <svg className="w-5 h-5 text-white/90 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            {/* 主图片展示区域 */}
+            <div className="flex-1 flex items-center justify-center p-8 md:p-12 lg:p-16">
+              <div className="relative max-w-full max-h-full">
+                <img 
+                  src={previewData.imageUrl} 
+                  alt="独立预览窗口" 
+                  className="max-w-[85vw] max-h-[75vh] object-contain rounded-2xl shadow-2xl ring-1 ring-white/30"
+                  referrerPolicy="no-referrer"
+                  crossOrigin="anonymous"
+                />
+              </div>
+            </div>
+            
+            {/* 底部提示栏 */}
+            <div className="p-4 bg-gradient-to-t from-black/10 to-transparent">
+              <div className="flex items-center justify-center">
+                <div className="px-6 py-3 bg-white/40 backdrop-blur-md rounded-full border border-white/30">
+                  <p className="text-gray-700 text-sm font-medium text-center">
+                    独立弹窗预览 • 点击关闭按钮或背景退出
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            {/* 点击背景关闭 */}
+            <div 
+              className="absolute inset-0 -z-10 cursor-pointer" 
+              onClick={closePreview}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

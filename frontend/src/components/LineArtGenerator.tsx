@@ -188,8 +188,20 @@ export default function LineArtGenerator({
                 <p className="text-gray-600 text-sm text-center">AI正在生成您的线稿图，请稍候...</p>
               </div>
             ) : resultUrl ? (
-              <div className="result-fade-in h-full">
-                <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
+              <div className="result-fade-in h-full relative">
+                <div className="w-full h-full flex items-center justify-center">
+                  <img 
+                    src={resultUrl} 
+                    alt="线稿预览" 
+                    className="max-w-full max-h-full object-contain rounded-lg border border-gray-300 cursor-pointer"
+                    onClick={() => {
+                      // 触发独立预览窗口
+                      window.dispatchEvent(new CustomEvent('showImagePreview', { 
+                        detail: { imageUrl: resultUrl, title: '线稿预览' } 
+                      }))
+                    }}
+                  />
+                </div>
               </div>
             ) : (
               <div className="h-full bg-gray-50 rounded-xl flex items-center justify-center border-2 border-dashed border-gray-300">

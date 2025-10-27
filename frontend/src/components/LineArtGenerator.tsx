@@ -148,24 +148,24 @@ export default function LineArtGenerator({
           </div>
         </div>
 
-        {/* 中间生成按钮区域 */}
-        <div className="flex flex-col items-center gap-4 lg:order-first order-last">
+        {/* 中间生成按钮区域 - 更居中显示 */}
+        <div className="flex flex-col items-center justify-center gap-4 lg:col-span-1">
           {/* 生成按钮 */}
           <button
             onClick={handleGenerate}
             disabled={!imageState.file || isGenerating}
-            className={`w-24 h-24 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg ${
+            className={`w-28 h-28 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl ${
               !imageState.file 
                 ? 'opacity-50 cursor-not-allowed bg-gray-400' 
                 : isGenerating 
                   ? 'opacity-75 cursor-wait bg-amber-400'
-                  : 'hover:shadow-xl hover:scale-110 bg-gradient-to-r from-amber-500 to-orange-500 animate-star-rotate'
+                  : 'hover:shadow-2xl hover:scale-110 bg-gradient-to-r from-amber-500 to-orange-500 animate-star-rotate'
             }`}
           >
             {isGenerating ? (
-              <Loader2 className="w-8 h-8 text-white animate-spin" />
+              <Loader2 className="w-10 h-10 text-white animate-spin" />
             ) : (
-              <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
               </svg>
             )}

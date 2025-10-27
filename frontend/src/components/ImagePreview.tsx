@@ -80,20 +80,20 @@ export default function ImagePreview({ imageUrl, onDownload, onZoom }: ImagePrev
           crossOrigin="anonymous"
         />
         
-        <div className="absolute top-lg right-lg flex gap-md opacity-0 group-hover:opacity-100 transition-opacity duration-normal">
+        <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 transform translate-y-1 group-hover:translate-y-0">
           <button
             onClick={handleZoomClick}
-            className="w-11 h-11 bg-neutral-900/80 hover:bg-neutral-900 rounded-md flex items-center justify-center transition-all hover:scale-105"
+            className="w-11 h-11 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all hover:scale-110 shadow-xl border border-white/20"
             title="放大预览"
           >
-            <ZoomIn className="w-5 h-5 text-white" />
+            <ZoomIn className="w-5 h-5 text-white drop-shadow-sm" />
           </button>
           <button
             onClick={handleDownload}
-            className="w-11 h-11 bg-neutral-900/80 hover:bg-neutral-900 rounded-md flex items-center justify-center transition-all hover:scale-105"
+            className="w-11 h-11 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all hover:scale-110 shadow-xl border border-white/20"
             title="下载图片"
           >
-            <Download className="w-5 h-5 text-white" />
+            <Download className="w-5 h-5 text-white drop-shadow-sm" />
           </button>
         </div>
       </div>
@@ -101,19 +101,21 @@ export default function ImagePreview({ imageUrl, onDownload, onZoom }: ImagePrev
       {/* 放大预览模态框 */}
       {isZoomed && (
         <div 
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-xxl"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
           onClick={() => setIsZoomed(false)}
         >
           <img 
             src={imageUrl} 
-            alt="Zoomed" 
-            className="max-w-full max-h-full object-contain rounded-lg shadow-modal"
+            alt="放大预览" 
+            className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl"
             referrerPolicy="no-referrer"
             crossOrigin="anonymous"
+            onClick={(e) => e.stopPropagation()}
           />
           <button
-            className="absolute top-xxl right-xxl text-white text-4xl hover:text-neutral-300 w-11 h-11 flex items-center justify-center"
+            className="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 w-12 h-12 flex items-center justify-center bg-black/50 hover:bg-black/70 rounded-full transition-all"
             onClick={() => setIsZoomed(false)}
+            title="关闭预览"
           >
             ×
           </button>

@@ -195,161 +195,134 @@ export default function BackgroundReplacer({
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto overflow-hidden">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-        {/* 左侧上传区 */}
-        <div className="w-full h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">上传图片</h2>
-          <div className="h-64">
+    <div className="w-full max-w-6xl mx-auto overflow-hidden space-y-8">
+      {/* 双栏主布局 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* 左侧上传区 - 包含所有选项 */}
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200/50 p-8 space-y-6">
+          <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">上传图片</h2>
+          
+          {/* 主图片上传 */}
+          <div className="h-48">
             <ImageUpload 
               onImageSelect={handleImageSelect}
               onImageRemove={handleImageRemove}
               previewUrl={subjectImage.previewUrl}
             />
           </div>
-        </div>
-
-        {/* 中间生成按钮区域 - 更居中显示 */}
-        <div className="flex flex-col items-center justify-center gap-4 lg:col-span-1">
-          {/* 生成按钮 */}
-          <button
-            onClick={handleGenerate}
-            disabled={!subjectImage.file || isGenerating}
-            className={`w-28 h-28 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl ${
-              !subjectImage.file 
-                ? 'opacity-50 cursor-not-allowed bg-gray-400' 
-                : isGenerating 
-                  ? 'opacity-75 cursor-wait bg-green-400'
-                  : 'hover:shadow-2xl hover:scale-110 bg-gradient-to-r from-green-500 to-teal-500 animate-star-rotate'
-            }`}
-          >
-            {isGenerating ? (
-              <div className="flex flex-col items-center gap-1">
-                <Loader2 className="w-8 h-8 text-white animate-spin" />
-                <span className="text-xs text-white font-medium">生成中...</span>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center gap-1">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-                <span className="text-xs text-white font-medium">场景融合</span>
-              </div>
-            )}
-          </button>
           
           {/* 模式选择 */}
           {subjectImage.previewUrl && (
-            <div className="w-48 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-md border border-gray-200/50">
-          <label className="block text-sm font-medium text-gray-700 mb-2 text-center">融合模式</label>
-            <div className="flex flex-col gap-2">
-              <button
-                onClick={() => setMode('text')}
-                className={`py-1 px-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1 ${
-                  mode === 'text' 
-                    ? 'bg-green-500 text-white shadow-md' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                <MessageSquare className="w-3 h-3" />
-                文本模式
-              </button>
-              <button
-                onClick={() => setMode('image')}
-                className={`py-1 px-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1 ${
-                  mode === 'image' 
-                    ? 'bg-green-500 text-white shadow-md' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                <ImageIcon className="w-3 h-3" />
-                图片模式
-              </button>
-              <button
-                onClick={() => setMode('hybrid')}
-                className={`py-1 px-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1 ${
-                  mode === 'hybrid' 
-                    ? 'bg-green-500 text-white shadow-md' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                <Layers className="w-3 h-3" />
-                混合模式
-              </button>
-            </div>
-          </div>
-        )}
-        
-        {/* 文本描述输入区 */}
-        {(mode === 'text' || mode === 'hybrid') && subjectImage.previewUrl && (
-          <div className="w-48 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-md border border-gray-200/50">
-            <label className="block text-sm font-medium text-gray-700 mb-2 text-center">背景描述</label>
-            <div className="relative">
-              <textarea
-                value={textPrompt}
-                onChange={(e) => setTextPrompt(e.target.value)}
-                placeholder="例如：现代简约客厅，温暖的自然光线，木地板背景"
-                className="w-full h-16 px-2 py-1 text-xs border border-gray-300 rounded-md resize-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-              />
-              <button
-                onClick={handleOptimizePrompt}
-                disabled={optimizing || isGenerating || !textPrompt.trim()}
-                className="absolute bottom-1 right-1 px-2 py-1 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-md hover:from-green-600 hover:to-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1 text-xs"
-              >
-                {optimizing ? (
-                  <Loader2 className="w-3 h-3 animate-spin" />
-                ) : (
-                  <Sparkles className="w-3 h-3" />
-                )}
-                <span className="font-medium">优化</span>
-              </button>
-            </div>
-          </div>
-        )}
-        
-        {/* 背景图片上传区 */}
-        {(mode === 'image' || mode === 'hybrid') && subjectImage.previewUrl && (
-          <div className="w-48 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-md border border-gray-200/50">
-            <label className="block text-sm font-medium text-gray-700 mb-2 text-center">背景图片</label>
-            {backgroundImage.previewUrl ? (
-              <div className="relative">
-                <img 
-                  src={backgroundImage.previewUrl} 
-                  alt="Background" 
-                  className="w-full h-16 object-cover rounded-md"
-                />
+            <div className="space-y-4">
+              <label className="block text-sm font-medium text-gray-700 text-center">融合模式</label>
+              <div className="grid grid-cols-1 gap-3">
                 <button
-                  onClick={handleBackgroundRemove}
-                  className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center hover:bg-red-600"
+                  onClick={() => setMode('text')}
+                  className={`py-3 px-4 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+                    mode === 'text' 
+                      ? 'bg-green-500 text-white shadow-md' 
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
                 >
-                  ×
+                  <MessageSquare className="w-4 h-4" />
+                  文本模式
+                </button>
+                <button
+                  onClick={() => setMode('image')}
+                  className={`py-3 px-4 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+                    mode === 'image' 
+                      ? 'bg-green-500 text-white shadow-md' 
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  <ImageIcon className="w-4 h-4" />
+                  图片模式
+                </button>
+                <button
+                  onClick={() => setMode('hybrid')}
+                  className={`py-3 px-4 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+                    mode === 'hybrid' 
+                      ? 'bg-green-500 text-white shadow-md' 
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  <Layers className="w-4 h-4" />
+                  混合模式
                 </button>
               </div>
-            ) : (
-              <div className="h-16 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center cursor-pointer hover:border-green-400 transition-colors">
-                <label className="text-xs text-gray-500 text-center cursor-pointer">
-                  <ImageIcon className="w-6 h-6 mx-auto mb-1" />
-                  点击上传
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => e.target.files?.[0] && handleBackgroundSelect(e.target.files[0])}
-                    className="hidden"
-                  />
-                </label>
+            </div>
+          )}
+          
+          {/* 文本描述输入区 */}
+          {(mode === 'text' || mode === 'hybrid') && subjectImage.previewUrl && (
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700 text-center">背景描述</label>
+              <div className="relative">
+                <textarea
+                  value={textPrompt}
+                  onChange={(e) => setTextPrompt(e.target.value)}
+                  placeholder="例如：现代简约客厅，温暖的自然光线，木地板背景"
+                  className="w-full h-20 px-3 py-2 text-sm border border-gray-300 rounded-xl resize-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                />
+                <button
+                  onClick={handleOptimizePrompt}
+                  disabled={optimizing || isGenerating || !textPrompt.trim()}
+                  className="absolute bottom-2 right-2 px-3 py-1 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-lg hover:from-green-600 hover:to-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1 text-xs"
+                >
+                  {optimizing ? (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <Sparkles className="w-3 h-3" />
+                  )}
+                  <span className="font-medium">优化</span>
+                </button>
               </div>
-            )}
-          </div>
-        )}
-      </div>
+            </div>
+          )}
+          
+          {/* 背景图片上传区 */}
+          {(mode === 'image' || mode === 'hybrid') && subjectImage.previewUrl && (
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700 text-center">背景图片</label>
+              {backgroundImage.previewUrl ? (
+                <div className="relative h-32">
+                  <img 
+                    src={backgroundImage.previewUrl} 
+                    alt="Background" 
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                  <button
+                    onClick={handleBackgroundRemove}
+                    className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-sm flex items-center justify-center hover:bg-red-600"
+                  >
+                    ×
+                  </button>
+                </div>
+              ) : (
+                <div className="h-32 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer hover:border-green-400 transition-colors">
+                  <label className="text-sm text-gray-500 text-center cursor-pointer">
+                    <ImageIcon className="w-8 h-8 mx-auto mb-2" />
+                    点击上传背景图片
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => e.target.files?.[0] && handleBackgroundSelect(e.target.files[0])}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
         {/* 右侧结果区 */}
-        <div className="w-full h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">生成结果</h2>
-          <div className="h-64">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200/50 p-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">融合预览</h2>
+          <div className="h-72">
             {isGenerating ? (
-              <div className="h-full bg-gray-50 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300">
-                <Loader2 className="w-8 h-8 text-green-500 animate-spin mb-3" />
+              <div className="h-full bg-gray-50 rounded-xl flex flex-col items-center justify-center border-2 border-dashed border-gray-300">
+                <Loader2 className="w-12 h-12 text-green-500 animate-spin mb-4" />
                 <p className="text-gray-600 text-sm text-center">AI正在融合您的图片场景，请稍候...</p>
               </div>
             ) : resultUrl ? (
@@ -357,9 +330,9 @@ export default function BackgroundReplacer({
                 <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
               </div>
             ) : (
-              <div className="h-full bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
+              <div className="h-full bg-gray-50 rounded-xl flex items-center justify-center border-2 border-dashed border-gray-300">
                 <div className="text-center">
-                  <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
                   <p className="text-gray-500 text-sm">
@@ -373,9 +346,38 @@ export default function BackgroundReplacer({
           </div>
         </div>
       </div>
+      
+      {/* 居中生成按钮 */}
+      <div className="flex justify-center">
+        <button
+          onClick={handleGenerate}
+          disabled={!subjectImage.file || isGenerating}
+          className={`w-80 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-xl ${
+            !subjectImage.file 
+              ? 'opacity-50 cursor-not-allowed bg-gray-400' 
+              : isGenerating 
+                ? 'opacity-75 cursor-wait bg-green-400'
+                : 'hover:shadow-2xl hover:scale-105 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600'
+          }`}
+        >
+          {isGenerating ? (
+            <div className="flex items-center gap-3">
+              <Loader2 className="w-6 h-6 text-white animate-spin" />
+              <span className="text-white font-medium text-lg">生成中...</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-3">
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              <span className="text-white font-medium text-lg">场景融合</span>
+            </div>
+          )}
+        </button>
+      </div>
 
       {error && (
-        <div className="fixed bottom-4 left-4 right-4 p-2 bg-red-100 border border-red-300 rounded-md text-red-600 text-xs text-center z-50">
+        <div className="fixed bottom-4 left-4 right-4 p-3 bg-red-100 border border-red-300 rounded-xl text-red-600 text-sm text-center z-50">
           {error}
         </div>
       )}

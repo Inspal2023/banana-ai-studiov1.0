@@ -128,12 +128,13 @@ export default function MultiViewGenerator({
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto overflow-hidden">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+    <div className="w-full max-w-6xl mx-auto overflow-hidden space-y-8">
+      {/* 双栏主布局 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* 左侧上传区 */}
-        <div className="w-full h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">上传图片</h2>
-          <div className="h-64">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200/50 p-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">上传图片</h2>
+          <div className="h-72">
             <ImageUpload 
               onImageSelect={handleImageSelect}
               onImageRemove={handleImageRemove}
@@ -142,61 +143,62 @@ export default function MultiViewGenerator({
           </div>
         </div>
 
-        {/* 中间生成按钮 - 更居中显示 */}
-        <div className="flex flex-col items-center justify-center lg:col-span-1">
-          <button
-            onClick={handleGenerate}
-            disabled={!imageState.file || isGenerating}
-            className={`w-28 h-28 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl ${
-              !imageState.file 
-                ? 'opacity-50 cursor-not-allowed bg-gray-400' 
-                : isGenerating 
-                  ? 'opacity-75 cursor-wait bg-purple-400'
-                  : 'hover:shadow-2xl hover:scale-110 bg-gradient-to-r from-purple-500 to-indigo-500 animate-star-rotate'
-            }`}
-          >
-            {isGenerating ? (
-              <div className="flex flex-col items-center gap-1">
-                <Loader2 className="w-8 h-8 text-white animate-spin" />
-                <span className="text-xs text-white font-medium">生成中...</span>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center gap-1">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-                <span className="text-xs text-white font-medium">多视角生成</span>
-              </div>
-            )}
-          </button>
-        </div>
-
         {/* 右侧结果区 */}
-        <div className="w-full h-80 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4 text-center">生成结果</h2>
-          <div className="h-64">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200/50 p-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">多视角预览</h2>
+          <div className="h-72">
             {isGenerating ? (
-              <div className="h-full bg-gray-50 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-gray-300">
-                <Loader2 className="w-8 h-8 text-purple-500 animate-spin mb-3" />
-                <p className="text-gray-600 text-sm text-center">AI正在生成您的三视图，请稍候...</p>
+              <div className="h-full bg-gray-50 rounded-xl flex flex-col items-center justify-center border-2 border-dashed border-gray-300">
+                <Loader2 className="w-12 h-12 text-purple-500 animate-spin mb-4" />
+                <p className="text-gray-600 text-sm text-center">AI正在生成您的多视角图，请稍候...</p>
               </div>
             ) : resultUrl ? (
               <div className="result-fade-in h-full">
                 <ImagePreview imageUrl={resultUrl} onDownload={handleDownload} />
               </div>
             ) : (
-              <div className="h-full bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
+              <div className="h-full bg-gray-50 rounded-xl flex items-center justify-center border-2 border-dashed border-gray-300">
                 <div className="text-center">
-                  <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
-                  <p className="text-gray-500 text-sm">上传图片后点击中间按钮生成三视图</p>
+                  <p className="text-gray-500 text-sm">上传图片后点击下方按钮生成多视角图</p>
                 </div>
               </div>
             )}
           </div>
         </div>
       </div>
+      
+      {/* 居中生成按钮 */}
+      <div className="flex justify-center">
+        <button
+          onClick={handleGenerate}
+          disabled={!imageState.file || isGenerating}
+          className={`w-80 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-xl ${
+            !imageState.file 
+              ? 'opacity-50 cursor-not-allowed bg-gray-400' 
+              : isGenerating 
+                ? 'opacity-75 cursor-wait bg-purple-400'
+                : 'hover:shadow-2xl hover:scale-105 bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 hover:from-purple-600 hover:via-indigo-600 hover:to-blue-600'
+          }`}
+        >
+          {isGenerating ? (
+            <div className="flex items-center gap-3">
+              <Loader2 className="w-6 h-6 text-white animate-spin" />
+              <span className="text-white font-medium text-lg">生成中...</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-3">
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <span className="text-white font-medium text-lg">多视角生成</span>
+            </div>
+          )}
+        </button>
+      </div>
+
       {error && (
         <div className="fixed bottom-4 left-4 right-4 p-2 bg-semantic-error/10 border border-semantic-error rounded-md text-semantic-error text-xs z-50">
           {error}
